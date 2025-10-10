@@ -1,0 +1,318 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>浅谈深度学习如何解决vSLAM落地的困境 | 木独小栈</title><meta name="author" content="Lin Yicheng"><meta name="copyright" content="Lin Yicheng"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="背景 深度学习被广泛应用在计算机视觉的各个领域中，各种网络结构层出不穷。而视觉SLAM作为经典的任务，自然早已有大量的研究人员尝试从各种角度将二者融合。而本文的目标是对深度学习或者说数据驱动的方法如何解决传统vSLAM流程在落地时面临的问题进行一个讨论。在2023年末这个节点上，我们再谈深度学习和vSLAM的结合似乎有些过晚了。但实际上恰恰相反，我认为现在才是最好的时机。理由有如下几点。 嵌入式A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈深度学习如何解决vSLAM落地的困境">
+<meta property="og:url" content="https://linyicheng1.github.io/blog/2023/12/10/NN-SLAM/index.html">
+<meta property="og:site_name" content="木独小栈">
+<meta property="og:description" content="背景 深度学习被广泛应用在计算机视觉的各个领域中，各种网络结构层出不穷。而视觉SLAM作为经典的任务，自然早已有大量的研究人员尝试从各种角度将二者融合。而本文的目标是对深度学习或者说数据驱动的方法如何解决传统vSLAM流程在落地时面临的问题进行一个讨论。在2023年末这个节点上，我们再谈深度学习和vSLAM的结合似乎有些过晚了。但实际上恰恰相反，我认为现在才是最好的时机。理由有如下几点。 嵌入式A">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://linyicheng1.github.io/blog/img/RDS.jpg">
+<meta property="article:published_time" content="2023-12-10T21:14:00.000Z">
+<meta property="article:modified_time" content="2025-10-10T06:32:44.772Z">
+<meta property="article:author" content="Lin Yicheng">
+<meta property="article:tag" content="SLAM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://linyicheng1.github.io/blog/img/RDS.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "浅谈深度学习如何解决vSLAM落地的困境",
+  "url": "https://linyicheng1.github.io/blog/2023/12/10/NN-SLAM/",
+  "image": "https://linyicheng1.github.io/blog/img/RDS.jpg",
+  "datePublished": "2023-12-10T21:14:00.000Z",
+  "dateModified": "2025-10-10T06:32:44.772Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Lin Yicheng",
+      "url": "https://linyicheng1.github.io/blog"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/img/icon.png"><link rel="canonical" href="https://linyicheng1.github.io/blog/2023/12/10/NN-SLAM/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '浅谈深度学习如何解决vSLAM落地的困境',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><style>
+  .katex-display {
+    text-align: center;
+    margin: 1.2em 0;
+  }
+  .katex {
+    font-size: 1.05em;
+    line-height: 1.4;
+  }
+  pre code.language-math {
+    background: none !important;
+    color: inherit !important;
+  }
+</style>
+<meta name="generator" content="Hexo 6.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/img/icon.png" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">Articles</div><div class="length-num">24</div></a><a href="/blog/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/blog/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/blog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="https://linyicheng1.github.io/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/blog/img/RDS.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><span class="site-name">木独小栈</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">浅谈深度学习如何解决vSLAM落地的困境</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/blog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="https://linyicheng1.github.io/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">浅谈深度学习如何解决vSLAM落地的困境</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-12-10T21:14:00.000Z" title="Created 2023-12-10 21:14:00">2023-12-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-10-10T06:32:44.772Z" title="Updated 2025-10-10 06:32:44">2025-10-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/SLAM/">SLAM</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="背景">背景</h2>
+<p>深度学习被广泛应用在计算机视觉的各个领域中，各种网络结构层出不穷。而视觉SLAM作为经典的任务，自然早已有大量的研究人员尝试从各种角度将二者融合。而本文的目标是对深度学习或者说数据驱动的方法如何解决传统vSLAM流程在落地时面临的问题进行一个讨论。在2023年末这个节点上，我们再谈深度学习和vSLAM的结合似乎有些过晚了。但实际上恰恰相反，我认为现在才是最好的时机。理由有如下几点。</p>
+<h3 id="嵌入式AI芯片发展">嵌入式AI芯片发展</h3>
+<p>硬件永远是软件算法发展的基石。而借助人工智能火热的东风以及国产半导体产业的火热，在这两年已经有价格低廉的高算力芯片的出现。例如瑞芯微的RK3588s单板价格只要700左右，即可获得6Tops的NPU、最高2.4GHz的八核处理器。在全速跑满的情况下，YOLOv5s 模型可以跑到大约190帧[1]！另一方面，Intel 最新发布的桌面级酷睿Ultra处理器中也包含一颗NPU, 这意味着在轻量级的AI算力将在大量的设备中具备。对于开发者来说，在NPU极易获得的情况下，纯CPU的实现将是低效的。</p>
+<p><img src="/blog/img/NN-SLAM/rk3588.png" alt=""></p>
+<h3 id="行业应用的发展">行业应用的发展</h3>
+<p>标杆企业的突破将会带动上下游的发展。国外sevensense公司，采用多相机融合的方式，纯视觉满足了清洁机器人和AGV机器人在室内和室外的导航定位需求[2]。国内INDEMIND公司，采用双目视觉传感器为主导的视觉导航算法，据宣传文稿已经达到了匹配激光雷达的精度[3]。紫川科技也推出了多款视觉SLAM应用的模块。总所周知，视觉SLAM落地难，但是目前已经有领头的企业表明了视觉SLAM的可行性。这证明了传统的方法的可靠性、成熟度，并且可能正处于落地应用的早期。</p>
+<p><img src="/blog/img/NN-SLAM/sevensense.png" alt=""></p>
+<p>在当下，一方面AI算力的高速发展，使得轻量级深度学习网络的应用成为可能，另一方面传统方法逐步开始落地。那么我们能做些什么呢？如果在自己的设备上运行过现有的开源SLAM算法，如经典的ORB-SLAM3, DM-VIO, VINS等等。它们的鲁棒性、精度等方面依旧难以满足直接的落地需求。工程开发者采用工程的方式解决它们的鲁棒性问题、精度问题。</p>
+<blockquote>
+<p>例如，某个方向的光照急剧变化对SLAM系统引入了扰动，典型场景是穿越隧道、室内外穿越运动等，可以采用多个相机解决，只要保证有一个方向的相机跟踪不丢失即可。</p>
+</blockquote>
+<p>而作为科研人员则希望提出一个光照鲁棒的跟踪算法，从更根本的角度去改善这一问题。因此，我认为针对实际的工程落地中面临的鲁棒性问题，我们能做的是：<strong>提出能够在嵌入式NPU或GPU的运行的轻量级网络，将视觉SLAM中难以用手工方法表达的、难以建立精确模型的模块用数据驱动的方法替换掉，而将传统SLAM中精确的建模和求解过程保留。</strong> 这样既保留了传统方法的优势，又能有效利用深度学习的强大表达能力，使得整体算法在鲁棒性、精度等方面上一个台阶。</p>
+<h2 id="现有的深度学习和vSLAM结合的方案">现有的深度学习和vSLAM结合的方案</h2>
+<p>现有的综述文章已经将深度学习vSLAM相结合的各种方案进行了详细的描述，这里我们通过文章 <em>A Survey on Deep Learning for Localization and Mapping:  Towards the Age of Spatial Machine Intelligence</em> 对现有方法进行回顾。</p>
+<h3 id="里程计">里程计</h3>
+<h4 id="端到端的里程计">端到端的里程计</h4>
+<p>端到端的里程计被分为两类，即有监督的VO和无监督的VO。</p>
+<ul>
+<li>有监督的VO输入序列图片并通过网络得到相对位姿，并利用位姿的真值对算法进行监督学习。</li>
+<li>无监督的方案则通过同时网络估计<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">t_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7651em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>时刻的场景深度和<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">t_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7651em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>到<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">t_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7651em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>时刻的相对位姿，通过深度估计值和相对位姿估计值将<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">t_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7651em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>时刻的图像warp到<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">t_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7651em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>时刻，用实际的图像和warp图像之间的相似度作为训练损失。当深度和相对位姿估计的越准，两张图片就会越相似。</li>
+</ul>
+<p><img src="/blog/img/NN-SLAM/e2evo.png" alt=""></p>
+<p>端到端的里程计的优势和劣势都是非常明显的，现有的方法大多还处于在KITTI数据集中训练、KITTI中数据验证的阶段。因此泛化性依旧不足，计算量也比较大。而优势在于鲁棒性非常好，即使大角度旋转的场景中也不会丢失。值得注意的是，现有端到端的里程计在部分的很好的场景中精度已经超过了传统的方法，当然泛化性就是另一个问题了。</p>
+<h4 id="混合里程计">混合里程计</h4>
+<p>所谓的混合里程计是指采用深度学习的方法辅助传统的SLAM的里程计。<br>
+典型的如：</p>
+<ol>
+<li>单目深度估计得到绝对尺度信息用于添加尺度约束，使得大规模单目VO具备尺度信息。</li>
+<li>单目深度估计作为深度滤波器的初始值，加快地图点的深度估计收敛。</li>
+<li>单目深度估计用于前端特征点提取和匹配的先验信息，更有效的选择特征点并匹配。</li>
+<li>深度学习的光流法结果用于VO前端。</li>
+</ol>
+<p><img src="/blog/img/NN-SLAM/cnn-svo.png" alt=""></p>
+<p>混合法的优势在于传统的SLAM过程被保留，精度、性能、泛化性等都要好很多。然而现有的混合里程计方法大多数是拿深度学习的县城的一个模块来用给SLAM提供而外的信息。这种组合式的、可分离的方法性能提升有限，且不够优雅。因此，如何针对SLAM问题，将二者融合的更紧密是一个难题。</p>
+<h4 id="视觉惯性里程计">视觉惯性里程计</h4>
+<p>视觉惯性里程计和纯视觉里程计区别在于对IMU数据的处理，端到端的视觉惯性里程计方法将IMU的数据同时融合到网络中。</p>
+<p><img src="/blog/img/NN-SLAM/e2evio.png" alt=""></p>
+<p>目前端到端的视觉惯性里程计，依旧无法达到传统方法的精度，其优势在于对测量噪声、错误的时间同步等问题更加鲁棒。</p>
+<h4 id="惯性里程计">惯性里程计</h4>
+<p>最近得益于深度学习的能力，单IMU也能估计位姿了。这一点确实非常不符合直觉，毕竟低端MSMS的漂移是非常大的。</p>
+<ul>
+<li>IMU预积分得到预测的位姿</li>
+<li>然后通过网络得到用于观测位姿</li>
+<li>采用EKF将二者融合得到最终估计的位姿</li>
+</ul>
+<p><img src="/blog/img/NN-SLAM/io.png" alt=""></p>
+<p>存疑：从理论上来说，这种方法得到的位姿的泛化性究竟如何呢？</p>
+<h3 id="建图">建图</h3>
+<p>深度学习用于建图模块的工作则更为多见，主要用于：</p>
+<ol>
+<li>利用卷积网络估计图像深度、构建稠密地图</li>
+<li>利用语义分割，构建各种各样的语义地图</li>
+<li>利用实例分割，构建物体地图</li>
+</ol>
+<p><img src="/blog/img/NN-SLAM/densemap.png" alt="稠密地图和语义地图构建"></p>
+<p><img src="/blog/img/NN-SLAM/objmap.png" alt="物体地图构建"></p>
+<p>目前深度学习和建图结合的问题有几点：</p>
+<ol>
+<li>是否需要稠密地图，在目前重感知、轻地图的背景下，稠密地图这一点有点鸡肋</li>
+<li>语义地图一方面依赖于稠密地图构建，另一方面是否需要稠密的语义地图也是值得商榷的。</li>
+<li>物体地图通才采用简单的几何体表达物体，或者采用事先给定了几何模型的物体构建物体地图。一个是如何让算法能识别的物体更为通用，另一个是需要面临的问题是： Objects （物体）是一个强语义弱几何的概念，因此精度肯定不高，怎么进行二者的平衡呢？</li>
+</ol>
+<p>对于NeRF等新型地图构建方法，具有强大的创新性，但是是否能实际落地应用在SLAM中尚未可知。需要科研人员继续攻克难题，努力推进。这不是本文的重点。</p>
+<h3 id="SLAM中其他模块">SLAM中其他模块</h3>
+<h4 id="学习求解局部BA问题">学习求解局部BA问题</h4>
+<p>虽然局部BA问题已经非常成熟，但是人们在估计相对位姿时大量的时候是凭借感觉，而非精确的数学求解。因此提出用网络估计一个相对位姿。</p>
+<p><img src="/blog/img/NN-SLAM/ba.png" alt=""></p>
+<p>例如将LM算法的迭代过程看成是一串相同网络对结果不断进行卷积求解[5]。</p>
+<h4 id="回环检测">回环检测</h4>
+<p>用学习的方法做回环检测基本是大家的共识，效果肯定比词袋模型这类的好，这里便不再赘述了。</p>
+<h2 id="一些批判性思考">一些批判性思考</h2>
+<p>（包含强烈的个人观点）</p>
+<ol>
+<li>完全摒弃传统方法的端到端方案是不被认可的，这一观点在许多会议上多位大佬都曾提及。</li>
+<li>局部粗分辨率的稠密地图用于导航是有必要的，而精细稠密地图和全局稠密地图对实际的应用来说是伪需求。</li>
+<li>简单的融合深度学习实现 A+B 的效果方案往往是低效的。</li>
+</ol>
+<p>对于深度学习和SLAM的结合，有以下几点个人的体会（这些判断均基于实际落地的需求和当前设备的算力）：</p>
+<ol>
+<li>传统方法中具有明确物理意义的部分，应该继续继承，而不是一味的端到端</li>
+<li>深度学习是为了解决SLAM中难以人工描述的部分，而不取代原有方案</li>
+<li>在学习方法的设计中融入传统的方法思想是提升性能的有效手段</li>
+<li>A+B式的融合应该被替换为充分考虑SLAM中的特征的方法，是专为SLAM设计的专用算法，而非拿来主义。</li>
+</ol>
+<h2 id="深度学习和SLAM结合的方向">深度学习和SLAM结合的方向</h2>
+<h3 id="数据驱动的方法打破vSLAM中对环境的简单假设">数据驱动的方法打破vSLAM中对环境的简单假设</h3>
+<p>计算机视觉算法中往往首先对数据的特征进行假设，然后基于该假设推导得到结论。但是这样的做法的鲁棒性完全取决于假设的合理性、普适性，如果假设很强则在某些不满足的环境中精度和鲁棒性快速下降。例如光流法中的图像灰度不变就是一个很强的假设，因此光照鲁棒性较差。而通过数据驱动的方法对现实世界中难以手工表达的部分建模，得到一个更加合理、更加准确的假设，这一思路将极大的提高算法的鲁棒性和精度。这里以我们之前的工作举例，即提出的混合光流法[5]。</p>
+<h4 id="混合光流法">混合光流法</h4>
+<p>光流法中的灰度假设问题是一个很强的假设，若是通过手工设计得到图像中的不变量，那便是描述子。从另一个角度去理解光流法和描述子匹配方法的话，光流法的描述子是当前灰度值，而在局部窗口内搜索相似的描述子也是一种光流法。因此，从图像中提取比灰度更高级一些的光照不变量特征，并用于原始的光流法将极大的提高光流法的光照鲁棒性。而如何定义图像中的光照不变量，人工描述是很困难的。因此，数据驱动的方法呼之欲出。在我们的工作中证明，只需要非常浅层的三四次卷积，即可获得图像中的光照不变特征。因此光流法中的灰度不变假设变为网络提取的特征不变，实现所谓的混合光流法。这一方法在光照剧烈变化的场景下，使得VINS的估计精度得到了显著的提高。</p>
+<p><img src="/blog/img/NN-SLAM/hylk.png" alt="混合光流法,forward指第一张和第二张进行光流，backward指第二张向第一张图像进行光流"></p>
+<p>这样的假设在SLAM中存在很多，这里简单提几个典型的假设。</p>
+<ol>
+<li>手工描述子基于对图像数据的认识，假设描述子在视角和光照变化下具有不变性。目前基于学习的描述子已经做的很多v了，但是都是类似SIFT的类型，在3D重建中表现优异，但是SLAM中所需要的下一个ORB特征点还没出现。对SLAM来说，效率才是更为关键的。</li>
+<li>直接法中的假设和光流类似，其中包含了对相机成像的建模过程，即考虑了相机采集时的曝光和增益等参数。但是这依旧是对现实世界的简单假设。如何利用数据驱动的方法，弥补这一假设，类似光流法中提取的光照不变量。得到光照鲁棒的直接法。</li>
+<li>IMU的噪声模型通常被建模为随机游走过程，这一假设依旧是对世界的简单假设。区别于端到端的通过IMU估计位姿，保留IMU预积分过程并通过数据驱动的方法，预测噪声的变化。这样既保留了泛化性又能有效的提高性能，例如 Deep IMU Bias Inference for Robust  Visual-Inertial Odometry with Factor Graphs</li>
+<li>深度滤波器中对深度估计指建模为高斯分布+均匀分布的形式，这一假设理论上也能够被数据驱动的方式所替换。</li>
+<li>相机模型也是对镜头光学成像过程的假设，在一些鱼眼镜头中则精度较低。</li>
+<li>周围环境是静态的假设，简单的采用深度学习分割出一些易于移动的物体并剔除点一直被我认为是杀鸡用牛刀，大材小用。因此期待一种更为优雅的形式的出现。</li>
+</ol>
+<h3 id="数据驱动的方程求解">数据驱动的方程求解</h3>
+<p>最典型的例子是人在估计相对位姿时并比如局部BA问题，没有去计算复杂的方程组。而是有一种感觉，就应当是这样的。通过神经网络的方法求解几何代数问题，是随着2022年CVPR的最佳论文的出现而被人们关注。从底层来说，基于深度学习的方程求解更像是记住了大量的情况下的求解结果，然后基于所记住的求解结果变换到新的数据中。这一方法优势在于非常的快，比传统的方法快非常多。当然Learning To Solve Hard Minimal Problems 这篇论文的工作开源的代码并没有很好用，这一领域依旧处于发展的早期。</p>
+<h3 id="稠密局部地图的构建">稠密局部地图的构建</h3>
+<p>稠密的局部地图被用于机器人的局部导航，目前常用的方法是单目深度估计或者双目深度估计结果作为输入，实现局部占用栅格地图的构建。这是典型的A+B式的创新，即前几个人好发论文后面的人再去做则显得创新性不足。这样的结合实在是低效，深度估计和SLAM过程完全分离。最简单的场景中，如摄像头固定不动，它的深度也将不断的估计，计算量一点也不会降低。因此如何把深度估计和SLAM结果结合，去除其中的冗余计算，实现更高效的局部稠密地图构建呢？这便是深度学习和传统的采用何种方式进行深度结合的开放性问题了。注意这里的稠密局部地图更像是重感知中的障碍物感知，即通过局部的图像序列感知周围障碍物信息用于导航。</p>
+<h3 id="长期地图的构建">长期地图的构建</h3>
+<p>视觉长期地图的表达形式依旧在探索过程中。对于激光SLAM，点云毋庸置疑是一个很好的表达形式。而对于视觉则目前并没有定论，语义地图，特征点点云地图，半稠密地图，物体SLAM地图,NeRF等等地图形式非常多。长期地图中面临春夏秋冬的季节更替，昼夜交替，动态物体，雨雪天气变换等多方面的挑战。个人的观点是室外场景的长期定位的解决可能只能依赖于视觉大模型的发展，实现更高级的智能，而在此之前将会是重感知轻全局地图的形式。对于室内场景，这一问题则会简单很多，只有单纯的光照变化和动态物体的问题。因此，深度学习如何解决室内动态物体和提高地图的光照、视角不变性则是目前更为可行的研究内容。</p>
+<h2 id="总结">总结</h2>
+<p>本文简单的从落地应用的角度出发，讨论了目前vSLAM算法到真正落地至机器人场景中，作为科研人员的我们在深度学习方法上还能做出什么贡献。其中包含了大量的个人主观见解与看法，并且所提出的一些研究方向也并非那么热门。个人在参加厦门的SLAM2023论坛时有一个特别明显的感受，即学术界关注的和工业界关注的点出现了较大gap。NeRF、具身智能等概念领域在学术界打得火热，而工业界则基于传统的SLAM做着corner case的问题。作为一个相对独立的科研人员，我希望做出弥补二者gap的工作。充分利用个人对深度学习的理解以及对传统SLAM算法的熟悉，将二者有机的融合起来，互相发挥彼此的优势。最后，希望本文对正在寻找自己方向的研究生同学在寻找自己课题和方向上有所启发，即结合自身基础和课题组优势思考自己在这个领域中能解决什么样的真问题。</p>
+<p>[1] RK3588运行YOLOv5s模型 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Hp4y1u7ex/?spm_id_from=333.337.search-card.all.click&amp;vd_source=4dd69fa6d40221a0fa0733def5c4708a">https://www.bilibili.com/video/BV1Hp4y1u7ex/?spm_id_from=333.337.search-card.all.click&amp;vd_source=4dd69fa6d40221a0fa0733def5c4708a</a><br>
+[2] INDEMIND视觉导航方案 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/BW1KrnoI-pq28JjaSutiOg">https://mp.weixin.qq.com/s/BW1KrnoI-pq28JjaSutiOg</a><br>
+[3] Sevensense 视觉导航方案 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=NJCoFKI2xj0">https://www.youtube.com/watch?v=NJCoFKI2xj0</a>  <a target="_blank" rel="noopener" href="https://www.sevensense.ai/">https://www.sevensense.ai/</a><br>
+[4] 混合光流法 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1gz4y1V77M/?spm_id_from=333.999.0.0">https://www.bilibili.com/video/BV1gz4y1V77M/?spm_id_from=333.999.0.0</a><br>
+[5] 学习BA求解 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=5bZbMm8UqbA">https://www.youtube.com/watch?v=5bZbMm8UqbA</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://linyicheng1.github.io/blog">Lin Yicheng</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://linyicheng1.github.io/blog/2023/12/10/NN-SLAM/">https://linyicheng1.github.io/blog/2023/12/10/NN-SLAM/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/SLAM/">SLAM</a></div><div class="post-share"><div class="social-share" data-image="/blog/img/RDS.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2024/01/14/study_sum/" title="取得的成就不应成为前行的枷锁"><img class="cover" src="/blog/img/story.png" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">取得的成就不应成为前行的枷锁</div></div><div class="info-2"><div class="info-item-1">大学时总想着自己会是一个终身学习者，当时我拼命的学习自己能接触到的一切，从机械结构到嵌入式软件，从电路设计到计算机视觉算法，一切都是那么美好。我依旧记得大二那年在四川社会实践，中间空出一个下午没有事情干，我都要学习嵌入式软件的知识，我也记得大三那年过前一天还在调试bug，当时第一次在仿真环境下运行出了机器人导航程序的那种快乐。当时的我觉得固步自封、安于现状这些词汇永远不会属于我，我一定是坚定的终身学习者，因为我觉得能学习到这些知识让我感到非常开心和充实。 如今，就连大学毕业也已经3年半了，持续在机器人领域深入学习与实践，完成了多个机器人工程项目，也写了几篇论文。但是在和一名和我有类似经历，略长我几岁的工程师的交流下，我才发现自己的问题。我之前学习和取得的成就正在成为我前行学习的阻力，而对他来说可能更为严重。我似乎很难从零开始，以一种初学者那样纯粹的心态，开始一个新的领域学习，完全的放下自己已经取得的成绩。我开始突然意识到我可能会再也难以像大学那样学习新的东西，然后成为当时自己眼里的对新东西无法学习，坚持守旧的一个老古董。可能直到现在我才真正的面对这样一个问题，如何终身学习，如何永...</div></div></div></a><a class="pagination-related" href="/blog/2023/12/02/story/" title="科研中的”故事性“"><img class="cover" src="/blog/img/story.png" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">科研中的”故事性“</div></div><div class="info-2"><div class="info-item-1">零、为何需要故事性 在电子出版物时代，文章数量急剧爆炸，只有少数的领域的引领者的论文能够保证会受到足够的关注。普通人如同你我若在一开始连读者的注意力都吸引不了，那么再好的工作也会被埋没。这里借用人类简史中的一个观点表达故事的重要性，智人与在同时期的类人猿的竞争中，智力并不占优势、体力亦不占优势，靠着具有相信虚构的故事的能力形成了大规模合作，绕过基因组的进化，实现了群体能力的巨大提升。所谓的宗教、国家、公司等生活的方方面面都是一个虚构的故事，而正是人们的共识赋予了他们力量。 其次，鲜明的反对部分人对写故事嗤之以鼻的态度。自己做出来的工作觉得做的很好，只关注于具体的算法实现、觉得实验做的效果好就可以了。认为写故事、编故事的做法只是在夸大事实、在吹牛，只有实干才是真科研。对此，我个人表达遗憾且惋惜。科研需要被关注被引用，需要形成整个行业的共识即让人觉得你提出来的方法才是未来趋势，并继续你的工作。淹没在浩如烟海的文献中的好工作也不是一个好工作，因为它对其他人的工作、科学的发展没有一点价值。 一、故事性的难点 意识到故事性的重要是最为困难的地方，其次才是各种方法。如果意识不到故事性的重要，...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2023/08/29/23-8-SLAM/" title="2023年6-8月SLAM论文速递"><img class="cover" src="/blog/img/23-8-SLAM.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-29</div><div class="info-item-2">2023年6-8月SLAM论文速递</div></div><div class="info-2"><div class="info-item-1">大规模VR定位方案 A Low-cost and Scalable Framework to Build Large-Scale Localization Benchmark for Augmented Reality 深度预测 LightDepth: Single-View Depth Self-Supervision from Illumination Decline 视觉定位 Wide-Area Geolocalization with a Limited Field of View Camera in Challenging Urban Environments AnyLoc: Towards Universal Visual Place Recognition Visual-inertial Loose Coupling for Resilient and Lightweight Direct Visual Localization Nerf VERF: Runtime Monitoring of Pose Estimation with Neural Radiance...</div></div></div></a><a class="pagination-related" href="/blog/2025/04/08/ImperativeLearning/" title="Imperative Learning A Self-supervised Neuro-Symbolic Learning Framework for Robot Autonomy"><img class="cover" src="/blog/img/RDS.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-08</div><div class="info-item-2">Imperative Learning A Self-supervised Neuro-Symbolic Learning Framework for Robot Autonomy</div></div><div class="info-2"><div class="info-item-1">命令式学习：面向机器人自主性的自监督神经符号学习框架 摘要 尽管强化学习与模仿学习等数据驱动方法在机器人自主性领域取得了显著成就，但其数据依赖的本质仍制约着它们在动态变化环境中的泛化能力。此外，针对机器人任务的大规模数据采集往往面临成本高昂与实施困难的双重挑战。为突破这些限制，我们提出了一种新型自监督神经符号（NeSy）计算框架——​​命令式学习（IL）​​，通过融合符号推理的泛化优势来提升机器人自主性。 IL框架由三大核心组件构成：  ​​神经模块​​：负责从原始传感器数据中提取高层次语义特征 ​​推理引擎​​：基于物理定律、逻辑推理和几何分析等符号化规则进行决策 ​​记忆系统​​：存储机器人经验与知识表征  我们将IL建模为一种特殊的​​双层优化（BLO）​​问题，实现了三个模块间的协同学习机制。这种设计既规避了数据驱动方法对标注数据的高度依赖，又充分结合了符号推理在逻辑一致性、物理规律遵从性和几何可行性等方面的优势。 通过探讨闭式解、一阶优化、约束优化、二阶优化和离散优化等多种技术手段，我们在五类机器人自主性任务中验证了IL的有效性：  路径规划（全局与局部） 规则归纳（逻...</div></div></div></a><a class="pagination-related" href="/blog/2023/08/26/Research_Direction_in_SLAM/" title="Research_Direction_in_SLAM"><img class="cover" src="/blog/img/RDS.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-26</div><div class="info-item-2">Research_Direction_in_SLAM</div></div><div class="info-2"><div class="info-item-1">视觉SLAM中的研究点总结 (更新中) 本文为个人学习、阅读文献以及工程项目实践中对于SLAM算法目前存在的问题和一些可行的论文创新点的总结。对于其中的内容有不当之处欢迎在Issues中进行讨论。  目录  概述 针对视觉SLAM系统各模块的研究  信息采集——新式传感器/多传感器 信息提取——特征提取 信息关联——特征匹配 信息处理（直接法）—— 图像灰度对齐估计位姿 信息处理（特征点）—— 特征点关联估计位姿 信息处理（后端优化）—— 基于关键帧结构的后端优化 信息处理（地图）—— 地图构建 端到端的多任务处理   视觉SLAM相关的其他任务  先构建视觉特征地图后定位的视觉定位算法     News  2023.7.28 参加第四届SLAM论坛，在交流学习后，对本文整体进行了进一步的完善。   进一步理解直接法的优势与面临的挑战 Nerf 与 SLAM的关系 未来的 SLAM 形态   2023.5.15 更新了手工直线特征提取的综述  概述 视觉SLAM算法目前遇到的困境在于理论的成熟度与实际的落地应用情况的不匹配。在经典的ORB-SLAM2,ORB-SLAM3等解决方案...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/img/icon.png" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Lin Yicheng</div><div class="author-info-description"></div><div class="site-data"><a href="/blog/archives/"><div class="headline">Articles</div><div class="length-num">24</div></a><a href="/blog/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/blog/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/linyicheng1"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/linyicheng1" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">欢迎你来我的世界</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%85%A5%E5%BC%8FAI%E8%8A%AF%E7%89%87%E5%8F%91%E5%B1%95"><span class="toc-number">1.1.</span> <span class="toc-text">嵌入式AI芯片发展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%8C%E4%B8%9A%E5%BA%94%E7%94%A8%E7%9A%84%E5%8F%91%E5%B1%95"><span class="toc-number">1.2.</span> <span class="toc-text">行业应用的发展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%B0%E6%9C%89%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%92%8CvSLAM%E7%BB%93%E5%90%88%E7%9A%84%E6%96%B9%E6%A1%88"><span class="toc-number">2.</span> <span class="toc-text">现有的深度学习和vSLAM结合的方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8C%E7%A8%8B%E8%AE%A1"><span class="toc-number">2.1.</span> <span class="toc-text">里程计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AB%AF%E5%88%B0%E7%AB%AF%E7%9A%84%E9%87%8C%E7%A8%8B%E8%AE%A1"><span class="toc-number">2.1.1.</span> <span class="toc-text">端到端的里程计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E9%87%8C%E7%A8%8B%E8%AE%A1"><span class="toc-number">2.1.2.</span> <span class="toc-text">混合里程计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%86%E8%A7%89%E6%83%AF%E6%80%A7%E9%87%8C%E7%A8%8B%E8%AE%A1"><span class="toc-number">2.1.3.</span> <span class="toc-text">视觉惯性里程计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%83%AF%E6%80%A7%E9%87%8C%E7%A8%8B%E8%AE%A1"><span class="toc-number">2.1.4.</span> <span class="toc-text">惯性里程计</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E5%9B%BE"><span class="toc-number">2.2.</span> <span class="toc-text">建图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SLAM%E4%B8%AD%E5%85%B6%E4%BB%96%E6%A8%A1%E5%9D%97"><span class="toc-number">2.3.</span> <span class="toc-text">SLAM中其他模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E6%B1%82%E8%A7%A3%E5%B1%80%E9%83%A8BA%E9%97%AE%E9%A2%98"><span class="toc-number">2.3.1.</span> <span class="toc-text">学习求解局部BA问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9E%E7%8E%AF%E6%A3%80%E6%B5%8B"><span class="toc-number">2.3.2.</span> <span class="toc-text">回环检测</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E6%89%B9%E5%88%A4%E6%80%A7%E6%80%9D%E8%80%83"><span class="toc-number">3.</span> <span class="toc-text">一些批判性思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%92%8CSLAM%E7%BB%93%E5%90%88%E7%9A%84%E6%96%B9%E5%90%91"><span class="toc-number">4.</span> <span class="toc-text">深度学习和SLAM结合的方向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%96%B9%E6%B3%95%E6%89%93%E7%A0%B4vSLAM%E4%B8%AD%E5%AF%B9%E7%8E%AF%E5%A2%83%E7%9A%84%E7%AE%80%E5%8D%95%E5%81%87%E8%AE%BE"><span class="toc-number">4.1.</span> <span class="toc-text">数据驱动的方法打破vSLAM中对环境的简单假设</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E5%85%89%E6%B5%81%E6%B3%95"><span class="toc-number">4.1.1.</span> <span class="toc-text">混合光流法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%96%B9%E7%A8%8B%E6%B1%82%E8%A7%A3"><span class="toc-number">4.2.</span> <span class="toc-text">数据驱动的方程求解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%A0%E5%AF%86%E5%B1%80%E9%83%A8%E5%9C%B0%E5%9B%BE%E7%9A%84%E6%9E%84%E5%BB%BA"><span class="toc-number">4.3.</span> <span class="toc-text">稠密局部地图的构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E6%9C%9F%E5%9C%B0%E5%9B%BE%E7%9A%84%E6%9E%84%E5%BB%BA"><span class="toc-number">4.4.</span> <span class="toc-text">长期地图的构建</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/09/Pose-Only/" title="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程"><img src="/blog/img/story.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程"/></a><div class="content"><a class="title" href="/blog/2025/10/09/Pose-Only/" title="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程">A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程</a><time datetime="2025-10-09T21:14:00.000Z" title="Created 2025-10-09 21:14:00">2025-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/09/10/nav/" title="新一代的导航算法研究思路"><img src="/blog/img/RDS.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="新一代的导航算法研究思路"/></a><div class="content"><a class="title" href="/blog/2025/09/10/nav/" title="新一代的导航算法研究思路">新一代的导航算法研究思路</a><time datetime="2025-09-10T21:14:00.000Z" title="Created 2025-09-10 21:14:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-1/" title="Theseus-教程0"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程0"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-1/" title="Theseus-教程0">Theseus-教程0</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-2/" title="Theseus-教程1"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程1"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-2/" title="Theseus-教程1">Theseus-教程1</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-3/" title="Theseus-教程2"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程2"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-3/" title="Theseus-教程2">Theseus-教程2</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2025 By Lin Yicheng</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"></div><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '$$', right: '$$', display: true},
+    {left: '$', right: '$', display: false}
+  ]});">
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code.language-math').forEach(block => {
+      const content = block.textContent;
+      const el = document.createElement('div');
+      el.classList.add('katex-display');
+      try {
+        katex.render(content, el, { throwOnError: false, displayMode: true });
+        block.parentNode.replaceWith(el);
+      } catch (e) {
+        console.error('KaTeX render error:', e);
+      }
+    });
+  });
+</script>
+<script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

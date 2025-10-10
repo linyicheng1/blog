@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2023年6-8月SLAM论文速递 | 木独小栈</title><meta name="author" content="Lin Yicheng"><meta name="copyright" content="Lin Yicheng"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="大规模VR定位方案 A Low-cost and Scalable Framework to Build Large-Scale Localization Benchmark for Augmented Reality 深度预测 LightDepth: Single-View Depth Self-Supervision from Illumination Decline 视觉定位 Wide-Ar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2023年6-8月SLAM论文速递">
+<meta property="og:url" content="https://linyicheng1.github.io/blog/2023/08/29/23-8-SLAM/index.html">
+<meta property="og:site_name" content="木独小栈">
+<meta property="og:description" content="大规模VR定位方案 A Low-cost and Scalable Framework to Build Large-Scale Localization Benchmark for Augmented Reality 深度预测 LightDepth: Single-View Depth Self-Supervision from Illumination Decline 视觉定位 Wide-Ar">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://linyicheng1.github.io/blog/img/23-8-SLAM.jpg">
+<meta property="article:published_time" content="2023-08-29T21:14:00.000Z">
+<meta property="article:modified_time" content="2025-10-10T06:32:44.772Z">
+<meta property="article:author" content="Lin Yicheng">
+<meta property="article:tag" content="SLAM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://linyicheng1.github.io/blog/img/23-8-SLAM.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "2023年6-8月SLAM论文速递",
+  "url": "https://linyicheng1.github.io/blog/2023/08/29/23-8-SLAM/",
+  "image": "https://linyicheng1.github.io/blog/img/23-8-SLAM.jpg",
+  "datePublished": "2023-08-29T21:14:00.000Z",
+  "dateModified": "2025-10-10T06:32:44.772Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Lin Yicheng",
+      "url": "https://linyicheng1.github.io/blog"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/img/icon.png"><link rel="canonical" href="https://linyicheng1.github.io/blog/2023/08/29/23-8-SLAM/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '2023年6-8月SLAM论文速递',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><style>
+  .katex-display {
+    text-align: center;
+    margin: 1.2em 0;
+  }
+  .katex {
+    font-size: 1.05em;
+    line-height: 1.4;
+  }
+  pre code.language-math {
+    background: none !important;
+    color: inherit !important;
+  }
+</style>
+<meta name="generator" content="Hexo 6.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/img/icon.png" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">Articles</div><div class="length-num">24</div></a><a href="/blog/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/blog/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/blog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="https://linyicheng1.github.io/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/blog/img/23-8-SLAM.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><span class="site-name">木独小栈</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">2023年6-8月SLAM论文速递</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/blog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="https://linyicheng1.github.io/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">2023年6-8月SLAM论文速递</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-08-29T21:14:00.000Z" title="Created 2023-08-29 21:14:00">2023-08-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-10-10T06:32:44.772Z" title="Updated 2025-10-10 06:32:44">2025-10-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/SLAM/">SLAM</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="大规模VR定位方案">大规模VR定位方案</h2>
+<p>A Low-cost and Scalable Framework to Build Large-Scale Localization Benchmark for Augmented Reality</p>
+<h2 id="深度预测">深度预测</h2>
+<p>LightDepth: Single-View Depth Self-Supervision from Illumination Decline</p>
+<h2 id="视觉定位">视觉定位</h2>
+<p>Wide-Area Geolocalization with a Limited Field of View Camera in Challenging Urban Environments</p>
+<p>AnyLoc: Towards Universal Visual Place Recognition</p>
+<p>Visual-inertial Loose Coupling for Resilient and Lightweight Direct Visual Localization</p>
+<h2 id="Nerf">Nerf</h2>
+<p>VERF: Runtime Monitoring of Pose Estimation with Neural Radiance Fields</p>
+<h2 id="非刚性SLAM">非刚性SLAM</h2>
+<p>SimCol3D–3D Reconstruction during Colonoscopy Challenge</p>
+<h2 id="特征匹配">特征匹配</h2>
+<p>AffineGlue: Joint Matching and Robust Estimation</p>
+<p>FeatureBooster: Boosting Feature Descriptors with a Lightweight Neural Network Supplemental Material</p>
+<p>PATS: Patch Area Transportation with Subdivision for Local Feature Matching</p>
+<p>Two-View Geometry Scoring Without Correspondences</p>
+<h2 id="VIO">VIO</h2>
+<p>Closed-Form Solution for Absolute Scale Velocity Determination Combining Inertial Measurements and a Single Feature</p>
+<p>Optimization-based VINS: Consistency, Marginalization, and FEJ</p>
+<p>HDVIO: Improving Localization and Disturbance Estimation with Hybrid Dynamics VIO</p>
+<p>Online Self-Calibration for Visual-Inertial Navigation: Models, Analysis, and Degeneracy</p>
+<p>Fast Monocular Visual-Inertial Initialization Leveraging Learned Single-View Depth</p>
+<h2 id="后端优化">后端优化</h2>
+<p>Scale jump-aware pose graph relaxation for monocular SLAM with re-initializations</p>
+<h2 id="数据集">数据集</h2>
+<p>SubT-MRS: A Subterranean, Multi-Robot, Multi-Spectral and Multi-Degraded Dataset for Robust SLAM</p>
+<p>M3ED: Multi-Robot, Multi-Sensor, Multi-Environment Event Dataset</p>
+<h2 id="线面特征">线面特征</h2>
+<p>Multi-Session, Localization-oriented and Lightweight LiDAR Mapping Using Semantic Lines and Planes</p>
+<p>Efficient Visual-Inertial Navigation with Point-Plane Map</p>
+<p>Hong Kong World: Leveraging Structural Regularity for Line-based SLAM</p>
+<h2 id="事件相机">事件相机</h2>
+<p>E-Calib: A Fast, Robust and Accurate Calibration Toolbox for Event Cameras</p>
+<h2 id="地图构建">地图构建</h2>
+<p>H2-Mapping: Real-time Dense Mapping Using Hierarchical Hybrid Representation</p>
+<h2 id="回环检测">回环检测</h2>
+<p>Towards View-invariant and Accurate Loop Detection Based on Scene Graph</p>
+<h2 id="语义SLAM">语义SLAM</h2>
+<p>TextSLAM: Visual SLAM with Semantic Planar Text Features</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://linyicheng1.github.io/blog">Lin Yicheng</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://linyicheng1.github.io/blog/2023/08/29/23-8-SLAM/">https://linyicheng1.github.io/blog/2023/08/29/23-8-SLAM/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/SLAM/">SLAM</a></div><div class="post-share"><div class="social-share" data-image="/blog/img/23-8-SLAM.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2023/10/17/phd_proposal/" title="phd proposal (博士开题)"><img class="cover" src="/blog/img/phd_proposal/%E5%B9%BB%E7%81%AF%E7%89%876.JPG" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">phd proposal (博士开题)</div></div><div class="info-2"><div class="info-item-1">                             </div></div></div></a><a class="pagination-related" href="/blog/2023/08/26/Research_Direction_in_SLAM/" title="Research_Direction_in_SLAM"><img class="cover" src="/blog/img/RDS.jpg" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Research_Direction_in_SLAM</div></div><div class="info-2"><div class="info-item-1">视觉SLAM中的研究点总结 (更新中) 本文为个人学习、阅读文献以及工程项目实践中对于SLAM算法目前存在的问题和一些可行的论文创新点的总结。对于其中的内容有不当之处欢迎在Issues中进行讨论。  目录  概述 针对视觉SLAM系统各模块的研究  信息采集——新式传感器/多传感器 信息提取——特征提取 信息关联——特征匹配 信息处理（直接法）—— 图像灰度对齐估计位姿 信息处理（特征点）—— 特征点关联估计位姿 信息处理（后端优化）—— 基于关键帧结构的后端优化 信息处理（地图）—— 地图构建 端到端的多任务处理   视觉SLAM相关的其他任务  先构建视觉特征地图后定位的视觉定位算法     News  2023.7.28 参加第四届SLAM论坛，在交流学习后，对本文整体进行了进一步的完善。   进一步理解直接法的优势与面临的挑战 Nerf 与 SLAM的关系 未来的 SLAM 形态   2023.5.15 更新了手工直线特征提取的综述  概述 视觉SLAM算法目前遇到的困境在于理论的成熟度与实际的落地应用情况的不匹配。在经典的ORB-SLAM2,ORB-SLAM3等解决方案...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/04/08/ImperativeLearning/" title="Imperative Learning A Self-supervised Neuro-Symbolic Learning Framework for Robot Autonomy"><img class="cover" src="/blog/img/RDS.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-08</div><div class="info-item-2">Imperative Learning A Self-supervised Neuro-Symbolic Learning Framework for Robot Autonomy</div></div><div class="info-2"><div class="info-item-1">命令式学习：面向机器人自主性的自监督神经符号学习框架 摘要 尽管强化学习与模仿学习等数据驱动方法在机器人自主性领域取得了显著成就，但其数据依赖的本质仍制约着它们在动态变化环境中的泛化能力。此外，针对机器人任务的大规模数据采集往往面临成本高昂与实施困难的双重挑战。为突破这些限制，我们提出了一种新型自监督神经符号（NeSy）计算框架——​​命令式学习（IL）​​，通过融合符号推理的泛化优势来提升机器人自主性。 IL框架由三大核心组件构成：  ​​神经模块​​：负责从原始传感器数据中提取高层次语义特征 ​​推理引擎​​：基于物理定律、逻辑推理和几何分析等符号化规则进行决策 ​​记忆系统​​：存储机器人经验与知识表征  我们将IL建模为一种特殊的​​双层优化（BLO）​​问题，实现了三个模块间的协同学习机制。这种设计既规避了数据驱动方法对标注数据的高度依赖，又充分结合了符号推理在逻辑一致性、物理规律遵从性和几何可行性等方面的优势。 通过探讨闭式解、一阶优化、约束优化、二阶优化和离散优化等多种技术手段，我们在五类机器人自主性任务中验证了IL的有效性：  路径规划（全局与局部） 规则归纳（逻...</div></div></div></a><a class="pagination-related" href="/blog/2023/12/10/NN-SLAM/" title="浅谈深度学习如何解决vSLAM落地的困境"><img class="cover" src="/blog/img/RDS.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-12-10</div><div class="info-item-2">浅谈深度学习如何解决vSLAM落地的困境</div></div><div class="info-2"><div class="info-item-1">背景 深度学习被广泛应用在计算机视觉的各个领域中，各种网络结构层出不穷。而视觉SLAM作为经典的任务，自然早已有大量的研究人员尝试从各种角度将二者融合。而本文的目标是对深度学习或者说数据驱动的方法如何解决传统vSLAM流程在落地时面临的问题进行一个讨论。在2023年末这个节点上，我们再谈深度学习和vSLAM的结合似乎有些过晚了。但实际上恰恰相反，我认为现在才是最好的时机。理由有如下几点。 嵌入式AI芯片发展 硬件永远是软件算法发展的基石。而借助人工智能火热的东风以及国产半导体产业的火热，在这两年已经有价格低廉的高算力芯片的出现。例如瑞芯微的RK3588s单板价格只要700左右，即可获得6Tops的NPU、最高2.4GHz的八核处理器。在全速跑满的情况下，YOLOv5s 模型可以跑到大约190帧[1]！另一方面，Intel 最新发布的桌面级酷睿Ultra处理器中也包含一颗NPU, 这意味着在轻量级的AI算力将在大量的设备中具备。对于开发者来说，在NPU极易获得的情况下，纯CPU的实现将是低效的。  行业应用的发展 标杆企业的突破将会带动上下游的发展。国外sevensense公司，采...</div></div></div></a><a class="pagination-related" href="/blog/2023/08/26/Research_Direction_in_SLAM/" title="Research_Direction_in_SLAM"><img class="cover" src="/blog/img/RDS.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-26</div><div class="info-item-2">Research_Direction_in_SLAM</div></div><div class="info-2"><div class="info-item-1">视觉SLAM中的研究点总结 (更新中) 本文为个人学习、阅读文献以及工程项目实践中对于SLAM算法目前存在的问题和一些可行的论文创新点的总结。对于其中的内容有不当之处欢迎在Issues中进行讨论。  目录  概述 针对视觉SLAM系统各模块的研究  信息采集——新式传感器/多传感器 信息提取——特征提取 信息关联——特征匹配 信息处理（直接法）—— 图像灰度对齐估计位姿 信息处理（特征点）—— 特征点关联估计位姿 信息处理（后端优化）—— 基于关键帧结构的后端优化 信息处理（地图）—— 地图构建 端到端的多任务处理   视觉SLAM相关的其他任务  先构建视觉特征地图后定位的视觉定位算法     News  2023.7.28 参加第四届SLAM论坛，在交流学习后，对本文整体进行了进一步的完善。   进一步理解直接法的优势与面临的挑战 Nerf 与 SLAM的关系 未来的 SLAM 形态   2023.5.15 更新了手工直线特征提取的综述  概述 视觉SLAM算法目前遇到的困境在于理论的成熟度与实际的落地应用情况的不匹配。在经典的ORB-SLAM2,ORB-SLAM3等解决方案...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/img/icon.png" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Lin Yicheng</div><div class="author-info-description"></div><div class="site-data"><a href="/blog/archives/"><div class="headline">Articles</div><div class="length-num">24</div></a><a href="/blog/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/blog/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/linyicheng1"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/linyicheng1" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">欢迎你来我的世界</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A7%E8%A7%84%E6%A8%A1VR%E5%AE%9A%E4%BD%8D%E6%96%B9%E6%A1%88"><span class="toc-number">1.</span> <span class="toc-text">大规模VR定位方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E9%A2%84%E6%B5%8B"><span class="toc-number">2.</span> <span class="toc-text">深度预测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%86%E8%A7%89%E5%AE%9A%E4%BD%8D"><span class="toc-number">3.</span> <span class="toc-text">视觉定位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nerf"><span class="toc-number">4.</span> <span class="toc-text">Nerf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E5%88%9A%E6%80%A7SLAM"><span class="toc-number">5.</span> <span class="toc-text">非刚性SLAM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E5%8C%B9%E9%85%8D"><span class="toc-number">6.</span> <span class="toc-text">特征匹配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VIO"><span class="toc-number">7.</span> <span class="toc-text">VIO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%AB%AF%E4%BC%98%E5%8C%96"><span class="toc-number">8.</span> <span class="toc-text">后端优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">9.</span> <span class="toc-text">数据集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E9%9D%A2%E7%89%B9%E5%BE%81"><span class="toc-number">10.</span> <span class="toc-text">线面特征</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E7%9B%B8%E6%9C%BA"><span class="toc-number">11.</span> <span class="toc-text">事件相机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%B0%E5%9B%BE%E6%9E%84%E5%BB%BA"><span class="toc-number">12.</span> <span class="toc-text">地图构建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E7%8E%AF%E6%A3%80%E6%B5%8B"><span class="toc-number">13.</span> <span class="toc-text">回环检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E4%B9%89SLAM"><span class="toc-number">14.</span> <span class="toc-text">语义SLAM</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/09/Pose-Only/" title="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程"><img src="/blog/img/story.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程"/></a><div class="content"><a class="title" href="/blog/2025/10/09/Pose-Only/" title="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程">A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程</a><time datetime="2025-10-09T21:14:00.000Z" title="Created 2025-10-09 21:14:00">2025-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/09/10/nav/" title="新一代的导航算法研究思路"><img src="/blog/img/RDS.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="新一代的导航算法研究思路"/></a><div class="content"><a class="title" href="/blog/2025/09/10/nav/" title="新一代的导航算法研究思路">新一代的导航算法研究思路</a><time datetime="2025-09-10T21:14:00.000Z" title="Created 2025-09-10 21:14:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-1/" title="Theseus-教程0"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程0"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-1/" title="Theseus-教程0">Theseus-教程0</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-2/" title="Theseus-教程1"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程1"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-2/" title="Theseus-教程1">Theseus-教程1</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-3/" title="Theseus-教程2"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程2"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-3/" title="Theseus-教程2">Theseus-教程2</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2025 By Lin Yicheng</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"></div><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '$$', right: '$$', display: true},
+    {left: '$', right: '$', display: false}
+  ]});">
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code.language-math').forEach(block => {
+      const content = block.textContent;
+      const el = document.createElement('div');
+      el.classList.add('katex-display');
+      try {
+        katex.render(content, el, { throwOnError: false, displayMode: true });
+        block.parentNode.replaceWith(el);
+      } catch (e) {
+        console.error('KaTeX render error:', e);
+      }
+    });
+  });
+</script>
+<script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

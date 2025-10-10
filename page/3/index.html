@@ -1,0 +1,337 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>木独小栈 - 欢迎来到我的世界</title><meta name="author" content="Lin Yicheng"><meta name="copyright" content="Lin Yicheng"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="木独小栈">
+<meta property="og:url" content="https://linyicheng1.github.io/blog/page/3/index.html">
+<meta property="og:site_name" content="木独小栈">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://linyicheng1.github.io/blog/img/icon.png">
+<meta property="article:author" content="Lin Yicheng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://linyicheng1.github.io/blog/img/icon.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/blog/img/icon.png"><link rel="canonical" href="https://linyicheng1.github.io/blog/page/3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '木独小栈',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><style>
+  .katex-display {
+    text-align: center;
+    margin: 1.2em 0;
+  }
+  .katex {
+    font-size: 1.05em;
+    line-height: 1.4;
+  }
+  pre code.language-math {
+    background: none !important;
+    color: inherit !important;
+  }
+</style>
+<meta name="generator" content="Hexo 6.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/img/icon.png" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">Articles</div><div class="length-num">24</div></a><a href="/blog/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/blog/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/blog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="https://linyicheng1.github.io/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(/blog/img/index.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><span class="site-name">木独小栈</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/blog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="https://linyicheng1.github.io/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">木独小栈</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/linyicheng1" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/blog/2023/10/20/sci_sum_3/" title="科研总结（三）研究生开题答辩"><img class="post-bg" src="/blog/img/RDS.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="科研总结（三）研究生开题答辩"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2023/10/20/sci_sum_3/" title="科研总结（三）研究生开题答辩">科研总结（三）研究生开题答辩</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-10-20T10:14:00.000Z" title="Created 2023-10-20 10:14:00">2023-10-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/PHD/">PHD</a></span></div><div class="content">一、背景 1 研究背景大帽子——整体项目应用背景  用动图、可视化图吸引他人目光，展示出需要研究的内容背景 用国家战略文件，国家战略需求，突出问题的重要性 引用国外著名专家学者的言论，突出问题的重要性  本部分的目标有两点，一是吸引目光，让大家一眼知道你要做一个什么事情，二是引用各种材料说明你要做的这件事情是很重要的。 有时候，做的东西是一个项目中的一个小部分、一个小点，而不是整个系统，因此需要用一个递进的逻辑关系说明你做的东西，在整个大项目中是很重要的。例如  大项目x对国家战略需求、是国内外研究前沿重点 →\to→ 项目x中的xxx技术是支持实现xxx功能的核心技术，决定了xxx性能 →\to→ 所以对xxx技术的研究是非常关键的，必要的。  2 项目中的难点问题 a) 用数据图片、动图等可视化的形式，展示现有的方法的不足之处 数据图片等表达形式一定要直观，并且尽量贴合实际情况，尽量不要用示意图而是采用真实的数据，展示出现有方法的明显不足。 例如：  b) 指出是因为什么难点问题导致算法的不足 需要总结提炼出难点问题，经典的方法是用xxx和xxx之间的矛盾描述例如：  aaa...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/blog/2023/10/17/phd_proposal/" title="phd proposal (博士开题)"><img class="post-bg" src="/blog/img/phd_proposal/%E5%B9%BB%E7%81%AF%E7%89%876.JPG" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="phd proposal (博士开题)"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2023/10/17/phd_proposal/" title="phd proposal (博士开题)">phd proposal (博士开题)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-10-17T10:14:00.000Z" title="Created 2023-10-17 10:14:00">2023-10-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/PHD/">PHD</a></span></div><div class="content">                             </div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/blog/2023/08/29/23-8-SLAM/" title="2023年6-8月SLAM论文速递"><img class="post-bg" src="/blog/img/23-8-SLAM.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="2023年6-8月SLAM论文速递"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2023/08/29/23-8-SLAM/" title="2023年6-8月SLAM论文速递">2023年6-8月SLAM论文速递</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-08-29T21:14:00.000Z" title="Created 2023-08-29 21:14:00">2023-08-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/SLAM/">SLAM</a></span></div><div class="content">大规模VR定位方案 A Low-cost and Scalable Framework to Build Large-Scale Localization Benchmark for Augmented Reality 深度预测 LightDepth: Single-View Depth Self-Supervision from Illumination Decline 视觉定位 Wide-Area Geolocalization with a Limited Field of View Camera in Challenging Urban Environments AnyLoc: Towards Universal Visual Place Recognition Visual-inertial Loose Coupling for Resilient and Lightweight Direct Visual Localization Nerf VERF: Runtime Monitoring of Pose Estimation with Neural Radiance...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/blog/2023/08/26/Research_Direction_in_SLAM/" title="Research_Direction_in_SLAM"><img class="post-bg" src="/blog/img/RDS.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Research_Direction_in_SLAM"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2023/08/26/Research_Direction_in_SLAM/" title="Research_Direction_in_SLAM">Research_Direction_in_SLAM</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-08-26T15:58:32.000Z" title="Created 2023-08-26 15:58:32">2023-08-26</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/SLAM/">SLAM</a></span></div><div class="content">视觉SLAM中的研究点总结 (更新中) 本文为个人学习、阅读文献以及工程项目实践中对于SLAM算法目前存在的问题和一些可行的论文创新点的总结。对于其中的内容有不当之处欢迎在Issues中进行讨论。  目录  概述 针对视觉SLAM系统各模块的研究  信息采集——新式传感器/多传感器 信息提取——特征提取 信息关联——特征匹配 信息处理（直接法）—— 图像灰度对齐估计位姿 信息处理（特征点）—— 特征点关联估计位姿 信息处理（后端优化）—— 基于关键帧结构的后端优化 信息处理（地图）—— 地图构建 端到端的多任务处理   视觉SLAM相关的其他任务  先构建视觉特征地图后定位的视觉定位算法     News  2023.7.28 参加第四届SLAM论坛，在交流学习后，对本文整体进行了进一步的完善。   进一步理解直接法的优势与面临的挑战 Nerf 与 SLAM的关系 未来的 SLAM 形态   2023.5.15 更新了手工直线特征提取的综述  概述 视觉SLAM算法目前遇到的困境在于理论的成熟度与实际的落地应用情况的不匹配。在经典的ORB-SLAM2,ORB-SLAM3等解决方案...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/blog/page/2/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/#content-inner">2</a><span class="page-number current">3</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/img/icon.png" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Lin Yicheng</div><div class="author-info-description"></div><div class="site-data"><a href="/blog/archives/"><div class="headline">Articles</div><div class="length-num">24</div></a><a href="/blog/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/blog/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/linyicheng1"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/linyicheng1" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">欢迎你来我的世界</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/09/Pose-Only/" title="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程"><img src="/blog/img/story.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程"/></a><div class="content"><a class="title" href="/blog/2025/10/09/Pose-Only/" title="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程">A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程</a><time datetime="2025-10-09T21:14:00.000Z" title="Created 2025-10-09 21:14:00">2025-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/09/10/nav/" title="新一代的导航算法研究思路"><img src="/blog/img/RDS.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="新一代的导航算法研究思路"/></a><div class="content"><a class="title" href="/blog/2025/09/10/nav/" title="新一代的导航算法研究思路">新一代的导航算法研究思路</a><time datetime="2025-09-10T21:14:00.000Z" title="Created 2025-09-10 21:14:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-1/" title="Theseus-教程0"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程0"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-1/" title="Theseus-教程0">Theseus-教程0</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-2/" title="Theseus-教程1"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程1"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-2/" title="Theseus-教程1">Theseus-教程1</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-3/" title="Theseus-教程2"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程2"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-3/" title="Theseus-教程2">Theseus-教程2</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>Categories</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/Navigation/"><span class="card-category-list-name">Navigation</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/PHD/"><span class="card-category-list-name">PHD</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/SLAM/"><span class="card-category-list-name">SLAM</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/Theseus/"><span class="card-category-list-name">Theseus</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/%E5%85%89%E6%B5%81/"><span class="card-category-list-name">光流</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/%E7%A7%91%E7%A0%94%E6%80%BB%E7%BB%93/"><span class="card-category-list-name">科研总结</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><span class="card-category-list-name">论文阅读</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/%E8%B0%83%E7%A0%94/"><span class="card-category-list-name">调研</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/blog/tags/PHD/" style="font-size: 1.26em; color: #999fa8">PHD</a> <a href="/blog/tags/Theseus/" style="font-size: 1.42em; color: #99a6b7">Theseus</a> <a href="/blog/tags/NN/" style="font-size: 1.1em; color: #999">NN</a> <a href="/blog/tags/Navigation/" style="font-size: 1.18em; color: #999ca1">Navigation</a> <a href="/blog/tags/SLAM/" style="font-size: 1.34em; color: #99a3b0">SLAM</a> <a href="/blog/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" style="font-size: 1.1em; color: #999">论文阅读</a> <a href="/blog/tags/%E7%A7%91%E7%A0%94%E6%80%BB%E7%BB%93/" style="font-size: 1.5em; color: #99a9bf">科研总结</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>Archives</span>
+      <a class="card-more-btn" href="/blog/archives/"
+            title="View More">
+            <i class="fas fa-angle-right"></i>
+          </a>
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/10/">
+            <span class="card-archive-list-date">
+              October 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/09/">
+            <span class="card-archive-list-date">
+              September 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/08/">
+            <span class="card-archive-list-date">
+              August 2025
+            </span>
+            <span class="card-archive-list-count">7</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/06/">
+            <span class="card-archive-list-date">
+              June 2025
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/04/">
+            <span class="card-archive-list-date">
+              April 2025
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2024/01/">
+            <span class="card-archive-list-date">
+              January 2024
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2023/12/">
+            <span class="card-archive-list-date">
+              December 2023
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2023/11/">
+            <span class="card-archive-list-date">
+              November 2023
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Website Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article Count :</div><div class="item-count">24</div></div><div class="webinfo-item"><div class="item-name">Unique Visitors :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Page Views :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-10-10T06:33:23.590Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2025 By Lin Yicheng</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  },
+  processSubtitle: (content, extraContents = []) => {
+    if (true) {
+      const sub = [].slice()
+
+      if (extraContents.length > 0) {
+        sub.unshift(...extraContents)
+      }
+
+      if (typeof content === 'string') {
+        sub.unshift(content)
+      } else if (Array.isArray(content)) {
+        sub.unshift(...content)
+      }
+
+      sub.length > 0 && typedJSFn.init(sub)
+    } else {
+      document.getElementById('subtitle').textContent = typeof content === 'string' ? content :
+        (Array.isArray(content) && content.length > 0 ? content[0] : '')
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  btf.getScript('https://sdk.jinrishici.com/v2/browser/jinrishici.js')
+    .then(() => {
+      jinrishici.load(result => {
+        if (result && result.data && result.data.content) {
+          typedJSFn.processSubtitle(result.data.content)
+        } else {
+          throw new Error('Failed to parse the return value of Jinrishici API')
+        }
+      })
+    })
+    .catch(err => {
+      console.error('Failed to get the Jinrishici API:', err)
+      typedJSFn.processSubtitle(0)
+    })
+}
+typedJSFn.run(subtitleType)
+</script></div><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '$$', right: '$$', display: true},
+    {left: '$', right: '$', display: false}
+  ]});">
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code.language-math').forEach(block => {
+      const content = block.textContent;
+      const el = document.createElement('div');
+      el.classList.add('katex-display');
+      try {
+        katex.render(content, el, { throwOnError: false, displayMode: true });
+        block.parentNode.replaceWith(el);
+      } catch (e) {
+        console.error('KaTeX render error:', e);
+      }
+    });
+  });
+</script>
+<script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

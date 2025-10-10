@@ -1,0 +1,337 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>木独小栈 - 欢迎来到我的世界</title><meta name="author" content="Lin Yicheng"><meta name="copyright" content="Lin Yicheng"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta property="og:type" content="website">
+<meta property="og:title" content="木独小栈">
+<meta property="og:url" content="https://linyicheng1.github.io/blog/page/2/index.html">
+<meta property="og:site_name" content="木独小栈">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://linyicheng1.github.io/blog/img/icon.png">
+<meta property="article:author" content="Lin Yicheng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://linyicheng1.github.io/blog/img/icon.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/blog/img/icon.png"><link rel="canonical" href="https://linyicheng1.github.io/blog/page/2/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '木独小栈',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><style>
+  .katex-display {
+    text-align: center;
+    margin: 1.2em 0;
+  }
+  .katex {
+    font-size: 1.05em;
+    line-height: 1.4;
+  }
+  pre code.language-math {
+    background: none !important;
+    color: inherit !important;
+  }
+</style>
+<meta name="generator" content="Hexo 6.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/img/icon.png" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">Articles</div><div class="length-num">24</div></a><a href="/blog/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/blog/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/blog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="https://linyicheng1.github.io/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(/blog/img/index.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><span class="site-name">木独小栈</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/blog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="https://linyicheng1.github.io/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">木独小栈</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/linyicheng1" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/blog/2025/06/02/RAFT/" title="RAFT光流的理解与解读"><img class="post-bg" src="/blog/img/story.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="RAFT光流的理解与解读"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2025/06/02/RAFT/" title="RAFT光流的理解与解读">RAFT光流的理解与解读</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-06-02T21:14:00.000Z" title="Created 2025-06-02 21:14:00">2025-06-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E7%A7%91%E7%A0%94%E6%80%BB%E7%BB%93/">科研总结</a></span></div><div class="content">一、RAFT 算法整体流程详解  🧱 一、模型结构组成 RAFT 网络由三个主要部分组成： 1. 特征提取模块（Feature Encoder）  输入：图像对 image1, image2 网络：BasicEncoder or SmallEncoder 输出：高维特征图 fmap1, fmap2（大小为原图的1/8）   2. 上下文编码模块（Context Encoder）   仅对 image1 进行编码   输出：  net: 初始 GRU hidden state（通过 tanh 激活） inp: 上下文特征输入（通过 ReLU 激活）    尺寸同样为原图的 1/8    3. 相关性模块（Correlation Volume）   全对相关性计算（所有像素对）   得到一个 6D 的相似度张量： 1corr[b, h1, w1, 1, h2, w2]   构建金字塔（多尺度）：avg pooling    4. 迭代更新模块（Update Block, GRU）   基于：当前 flow、corr、context 特征   输出：  delta_flow：光流增量...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/blog/2025/04/21/sci_sum_6/" title="科研总结（六）论文写作规范化流程"><img class="post-bg" src="/blog/img/23-8-SLAM.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="科研总结（六）论文写作规范化流程"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2025/04/21/sci_sum_6/" title="科研总结（六）论文写作规范化流程">科研总结（六）论文写作规范化流程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-04-21T21:14:00.000Z" title="Created 2025-04-21 21:14:00">2025-04-21</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E7%A7%91%E7%A0%94%E6%80%BB%E7%BB%93/">科研总结</a></span></div><div class="content">前言 为了进一步的提高写作效率，更好的保证写作质量，让更多同学快速掌握科研写作能力与思维。我们在本文中制定了一些写作的规范和要点，提供了一些通用的写作流程和自检表。在正式开始写作前，通过规范化的大纲拟定以及逻辑推敲，保证成文的质量。  前期准备 1. 明确论点 论文的本质是向读者论证作者的观点，和读者探讨某个问题，某个目标应该如何看待以及如何解决。因此，最关键的就是作者本身的观点和见解即论点。 论点：作者所提出的见解和主张，是讨论的中心观点。 例如：  attention is all you need 直接把论点作为标题 Attention is not all you need anymore 旗帜鲜明的论点反对 Is Noise Conditioning Necessary for Denoising Generative Models? 反问句表达观点  2. 明确方法 论文一般提出了一种有特点、创新性的方法，因此需要总结自己方法中最突出的特点、优势。 例如：  Deep Residual Learning for Image Recognition 深度參差学习 Fea...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/blog/2025/04/20/ObjectNav/" title="面向目标的导航调研"><img class="post-bg" src="/blog/img/23-8-SLAM.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="面向目标的导航调研"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2025/04/20/ObjectNav/" title="面向目标的导航调研">面向目标的导航调研</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-04-20T21:14:00.000Z" title="Created 2025-04-20 21:14:00">2025-04-20</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E8%B0%83%E7%A0%94/">调研</a></span></div><div class="content">根据导航目标分类可以分为  Object-goal Navigation （对象目标导航） Instance-image-goal Navigation （实例图像目标导航） Text-goal Navigation (文本目标导航)  需要实现如下的能力：  语义/图片级别的目标理解（到厨房找黑色垃圾桶，到卧室找一个蓝色的灯，找到这个图片的位置） 空间推理，能够理解场景的之间的关联，例如找冰箱先去厨房，找床就要去卧室，找马桶要去洗手间  根据方法可以分为端到端的导航和模块化导航，其中区别如下图所示    端到端的导航通过视觉编码器和语言描述编码器得到当前图像和目标位置的特征，然后训练一个策略网络，根据这两个特征进行判断到底往哪个方向走，没有一个显式构建地图的过程，也没有显式的逻辑推理过程，一切都是端到端训练出来的。   模块化的导航利用了现有的定位建图方法，然后用显式的方式调用大模型的理解和推理能力  构建几何地图，用传统方法找到哪些方向可能有没有被探索的区域 构建语义地图，调用图像大模型进行目标识别/语义分割，建立语义地图（各种语义地图表达方法不同） 将语义地图转换为文本，调...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/blog/2025/04/08/ImperativeLearning/" title="Imperative Learning A Self-supervised Neuro-Symbolic Learning Framework for Robot Autonomy"><img class="post-bg" src="/blog/img/RDS.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Imperative Learning A Self-supervised Neuro-Symbolic Learning Framework for Robot Autonomy"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2025/04/08/ImperativeLearning/" title="Imperative Learning A Self-supervised Neuro-Symbolic Learning Framework for Robot Autonomy">Imperative Learning A Self-supervised Neuro-Symbolic Learning Framework for Robot Autonomy</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-04-08T15:58:32.000Z" title="Created 2025-04-08 15:58:32">2025-04-08</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/SLAM/">SLAM</a></span></div><div class="content">命令式学习：面向机器人自主性的自监督神经符号学习框架 摘要 尽管强化学习与模仿学习等数据驱动方法在机器人自主性领域取得了显著成就，但其数据依赖的本质仍制约着它们在动态变化环境中的泛化能力。此外，针对机器人任务的大规模数据采集往往面临成本高昂与实施困难的双重挑战。为突破这些限制，我们提出了一种新型自监督神经符号（NeSy）计算框架——​​命令式学习（IL）​​，通过融合符号推理的泛化优势来提升机器人自主性。 IL框架由三大核心组件构成：  ​​神经模块​​：负责从原始传感器数据中提取高层次语义特征 ​​推理引擎​​：基于物理定律、逻辑推理和几何分析等符号化规则进行决策 ​​记忆系统​​：存储机器人经验与知识表征  我们将IL建模为一种特殊的​​双层优化（BLO）​​问题，实现了三个模块间的协同学习机制。这种设计既规避了数据驱动方法对标注数据的高度依赖，又充分结合了符号推理在逻辑一致性、物理规律遵从性和几何可行性等方面的优势。 通过探讨闭式解、一阶优化、约束优化、二阶优化和离散优化等多种技术手段，我们在五类机器人自主性任务中验证了IL的有效性：  路径规划（全局与局部） 规则归纳（逻...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/blog/2025/04/03/sci_sum_5/" title="科研总结（六）论文审稿流程"><img class="post-bg" src="/blog/img/23-8-SLAM.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="科研总结（六）论文审稿流程"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2025/04/03/sci_sum_5/" title="科研总结（六）论文审稿流程">科研总结（六）论文审稿流程</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2025-04-03T21:14:00.000Z" title="Created 2025-04-03 21:14:00">2025-04-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E7%A7%91%E7%A0%94%E6%80%BB%E7%BB%93/">科研总结</a></span></div><div class="content">前言 随着科研工作的开展，合作论文or项目越来越多，越来越难以快速的把握科研进展以及把控写作质量。为了进一步的让更多人具有更高的写作能力与思维是目前的一大难题。考虑到每个人理解的“好”的论文的不一致，特此总结如下的一些审稿过程中的要点，用于辅助论文写作，提升写作质量。  论文审稿流程 1. 看主题：这篇论文做了什么？ （认可） 需要能够用一句话总结出这篇论文的工作，属于哪个领域，做了一件什么样的事情。这件事情本身应该是值得去做的。 2. 看创新：这个论文和之前的工作有什么不一样的见解？ （巧） 假设检验中的假设部分，需要说明清楚如下的一句话： 之前的工作认为，xxx，很好，所以他们采用了xxxx方案，但是我觉得可以yyy这样理解。（其中，yyy必须要有逻辑，甚至配套可视化的图片）所谓的创新性不足，就是论文提出的不一样的见解不够新，或者没有足够的让审稿人理解。 3. 看逻辑：通过什么方法实现自己的见解的 （第一性原理） 在认可论文所提出的不一样的见解之后，肯定会有不一样的技术路线。因此，我们看方法部分主要看所提出的方法能否有逻辑的实现所提出的功能。需要让人理解到如下的一句话。 为了...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/blog/2024/01/31/sci_sum_4/" title="科研总结（五）再谈科研论文撰写"><img class="post-bg" src="/blog/img/RDS.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="科研总结（五）再谈科研论文撰写"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2024/01/31/sci_sum_4/" title="科研总结（五）再谈科研论文撰写">科研总结（五）再谈科研论文撰写</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-01-31T10:14:00.000Z" title="Created 2024-01-31 10:14:00">2024-01-31</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/PHD/">PHD</a></span></div><div class="content">前言 最近投稿、拒稿以及审稿等经历总结越来越多，也到了再一次总结的时候。之前的文中大抵是结构的简单模仿，而没有领会其中关键的深层原则。因而在一些新的类型文章中遇到了许多困难，导致成文质量偏低。 论文写作的总体原则：  紧紧围绕写作的目的进行写作 始终站在一个大同行的读者角度撰写文字  摘要 摘要的目的 替代整体论文，使得读者能够快速理清文章逻辑，达到不阅读全文就能获取所有必要信息的目的。 读者期望的摘要 快速的理解这个论文的背景，解决的问题，解决的思路以及最终取得的结论。 摘要的基本结构  背景介绍 （行业公认的事情，重要性） 问题引出 （目前存在的问题，痛点） 研究的方法 （思路巧妙的解决存在的问题） 结论 （如何证明你的创新点是有效的，证明的严谨性） 意义 （突出工作对学术界的意义重大）  摘要的句子需要反复打磨，突出问题重要性、直接点明当前痛点、展示你的巧妙思路、逻辑严谨的证明思路的正确性最后说明工作的意义重大。 摘要撰写的技巧及注意事项  一般不出现引用文献，图表等 一般不出现单词简写，代号等 避免使用第一人称 避免冗长的背景，重复的形容词等  引言 简介的目的 论述为什...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/blog/2024/01/14/study_sum/" title="取得的成就不应成为前行的枷锁"><img class="post-bg" src="/blog/img/story.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="取得的成就不应成为前行的枷锁"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2024/01/14/study_sum/" title="取得的成就不应成为前行的枷锁">取得的成就不应成为前行的枷锁</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2024-01-14T21:14:00.000Z" title="Created 2024-01-14 21:14:00">2024-01-14</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E7%A7%91%E7%A0%94%E6%80%BB%E7%BB%93/">科研总结</a></span></div><div class="content">大学时总想着自己会是一个终身学习者，当时我拼命的学习自己能接触到的一切，从机械结构到嵌入式软件，从电路设计到计算机视觉算法，一切都是那么美好。我依旧记得大二那年在四川社会实践，中间空出一个下午没有事情干，我都要学习嵌入式软件的知识，我也记得大三那年过前一天还在调试bug，当时第一次在仿真环境下运行出了机器人导航程序的那种快乐。当时的我觉得固步自封、安于现状这些词汇永远不会属于我，我一定是坚定的终身学习者，因为我觉得能学习到这些知识让我感到非常开心和充实。 如今，就连大学毕业也已经3年半了，持续在机器人领域深入学习与实践，完成了多个机器人工程项目，也写了几篇论文。但是在和一名和我有类似经历，略长我几岁的工程师的交流下，我才发现自己的问题。我之前学习和取得的成就正在成为我前行学习的阻力，而对他来说可能更为严重。我似乎很难从零开始，以一种初学者那样纯粹的心态，开始一个新的领域学习，完全的放下自己已经取得的成绩。我开始突然意识到我可能会再也难以像大学那样学习新的东西，然后成为当时自己眼里的对新东西无法学习，坚持守旧的一个老古董。可能直到现在我才真正的面对这样一个问题，如何终身学习，如何永...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/blog/2023/12/10/NN-SLAM/" title="浅谈深度学习如何解决vSLAM落地的困境"><img class="post-bg" src="/blog/img/RDS.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="浅谈深度学习如何解决vSLAM落地的困境"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2023/12/10/NN-SLAM/" title="浅谈深度学习如何解决vSLAM落地的困境">浅谈深度学习如何解决vSLAM落地的困境</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-10T21:14:00.000Z" title="Created 2023-12-10 21:14:00">2023-12-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/SLAM/">SLAM</a></span></div><div class="content">背景 深度学习被广泛应用在计算机视觉的各个领域中，各种网络结构层出不穷。而视觉SLAM作为经典的任务，自然早已有大量的研究人员尝试从各种角度将二者融合。而本文的目标是对深度学习或者说数据驱动的方法如何解决传统vSLAM流程在落地时面临的问题进行一个讨论。在2023年末这个节点上，我们再谈深度学习和vSLAM的结合似乎有些过晚了。但实际上恰恰相反，我认为现在才是最好的时机。理由有如下几点。 嵌入式AI芯片发展 硬件永远是软件算法发展的基石。而借助人工智能火热的东风以及国产半导体产业的火热，在这两年已经有价格低廉的高算力芯片的出现。例如瑞芯微的RK3588s单板价格只要700左右，即可获得6Tops的NPU、最高2.4GHz的八核处理器。在全速跑满的情况下，YOLOv5s 模型可以跑到大约190帧[1]！另一方面，Intel 最新发布的桌面级酷睿Ultra处理器中也包含一颗NPU, 这意味着在轻量级的AI算力将在大量的设备中具备。对于开发者来说，在NPU极易获得的情况下，纯CPU的实现将是低效的。  行业应用的发展 标杆企业的突破将会带动上下游的发展。国外sevensense公司，采...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/blog/2023/12/02/story/" title="科研中的”故事性“"><img class="post-bg" src="/blog/img/story.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="科研中的”故事性“"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2023/12/02/story/" title="科研中的”故事性“">科研中的”故事性“</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-12-02T21:14:00.000Z" title="Created 2023-12-02 21:14:00">2023-12-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E7%A7%91%E7%A0%94%E6%80%BB%E7%BB%93/">科研总结</a></span></div><div class="content">零、为何需要故事性 在电子出版物时代，文章数量急剧爆炸，只有少数的领域的引领者的论文能够保证会受到足够的关注。普通人如同你我若在一开始连读者的注意力都吸引不了，那么再好的工作也会被埋没。这里借用人类简史中的一个观点表达故事的重要性，智人与在同时期的类人猿的竞争中，智力并不占优势、体力亦不占优势，靠着具有相信虚构的故事的能力形成了大规模合作，绕过基因组的进化，实现了群体能力的巨大提升。所谓的宗教、国家、公司等生活的方方面面都是一个虚构的故事，而正是人们的共识赋予了他们力量。 其次，鲜明的反对部分人对写故事嗤之以鼻的态度。自己做出来的工作觉得做的很好，只关注于具体的算法实现、觉得实验做的效果好就可以了。认为写故事、编故事的做法只是在夸大事实、在吹牛，只有实干才是真科研。对此，我个人表达遗憾且惋惜。科研需要被关注被引用，需要形成整个行业的共识即让人觉得你提出来的方法才是未来趋势，并继续你的工作。淹没在浩如烟海的文献中的好工作也不是一个好工作，因为它对其他人的工作、科学的发展没有一点价值。 一、故事性的难点 意识到故事性的重要是最为困难的地方，其次才是各种方法。如果意识不到故事性的重要，...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/blog/2023/11/29/science_or_engine/" title="科学问题和工程问题"><img class="post-bg" src="/blog/img/23-8-SLAM.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="科学问题和工程问题"></a></div><div class="recent-post-info"><a class="article-title" href="/blog/2023/11/29/science_or_engine/" title="科学问题和工程问题">科学问题和工程问题</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">Created</span><time datetime="2023-11-29T21:14:00.000Z" title="Created 2023-11-29 21:14:00">2023-11-29</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/blog/categories/%E7%A7%91%E7%A0%94%E6%80%BB%E7%BB%93/">科研总结</a></span></div><div class="content">典型的科研逻辑为：发现科学问题-&gt;提出核心创新点-&gt;基于该核心创新解决科学问题。 工程问题中包含的科学问题 要实现的工程问题中，遇到了某个难题。这个难题是全世界现有的方法都还没解决的。这个难题就是工程问题中的科学问题。在研究中提出针对难题的工程技术方法，从而攻克这一难题。 科学问题中的工程问题 这个科学问题是不证自明的，比如图像分割任务、目标识别任务、SLAM任务。这种任务类似于攀登珠穆朗玛峰，我们就是要不断的攀登、不断的提高其性能。但是具体如何实现得到更高性能的方法却是一个工程问题。这类问题则需要在前人的基础、框架上进行改进，找到前人方法中的局限性并给出给好的工程方案，实现更好的效果。 工程问题中包含的科学问题，科学问题又包含工程问题 在工程问题中发现了科学问题，然后查阅文献发现这个科学问题已经被少量的人研究过了，如何在他们基础上进一步的提升性能又是另一个工程问题。 工程问题 已经有人实现过这个工程目标，并且技术方案已经被证明可行。那么再去沿着这个道路走便是工程问题。 工程问题和科学问题之间的互相转换 对于同一个问题，既可以用简单的、工程性的思路去把他解决掉，也可以...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/blog/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/#content-inner">3</a><a class="extend next" rel="next" href="/blog/page/3/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/img/icon.png" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Lin Yicheng</div><div class="author-info-description"></div><div class="site-data"><a href="/blog/archives/"><div class="headline">Articles</div><div class="length-num">24</div></a><a href="/blog/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/blog/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/linyicheng1"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/linyicheng1" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">欢迎你来我的世界</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/09/Pose-Only/" title="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程"><img src="/blog/img/story.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程"/></a><div class="content"><a class="title" href="/blog/2025/10/09/Pose-Only/" title="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程">A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程</a><time datetime="2025-10-09T21:14:00.000Z" title="Created 2025-10-09 21:14:00">2025-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/09/10/nav/" title="新一代的导航算法研究思路"><img src="/blog/img/RDS.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="新一代的导航算法研究思路"/></a><div class="content"><a class="title" href="/blog/2025/09/10/nav/" title="新一代的导航算法研究思路">新一代的导航算法研究思路</a><time datetime="2025-09-10T21:14:00.000Z" title="Created 2025-09-10 21:14:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-1/" title="Theseus-教程0"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程0"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-1/" title="Theseus-教程0">Theseus-教程0</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-2/" title="Theseus-教程1"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程1"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-2/" title="Theseus-教程1">Theseus-教程1</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-3/" title="Theseus-教程2"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程2"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-3/" title="Theseus-教程2">Theseus-教程2</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>Categories</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/Navigation/"><span class="card-category-list-name">Navigation</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/PHD/"><span class="card-category-list-name">PHD</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/SLAM/"><span class="card-category-list-name">SLAM</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/Theseus/"><span class="card-category-list-name">Theseus</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/%E5%85%89%E6%B5%81/"><span class="card-category-list-name">光流</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/%E7%A7%91%E7%A0%94%E6%80%BB%E7%BB%93/"><span class="card-category-list-name">科研总结</span><span class="card-category-list-count">7</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"><span class="card-category-list-name">论文阅读</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/blog/categories/%E8%B0%83%E7%A0%94/"><span class="card-category-list-name">调研</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>Tags</span></div><div class="card-tag-cloud"><a href="/blog/tags/PHD/" style="font-size: 1.26em; color: #999fa8">PHD</a> <a href="/blog/tags/Theseus/" style="font-size: 1.42em; color: #99a6b7">Theseus</a> <a href="/blog/tags/NN/" style="font-size: 1.1em; color: #999">NN</a> <a href="/blog/tags/Navigation/" style="font-size: 1.18em; color: #999ca1">Navigation</a> <a href="/blog/tags/SLAM/" style="font-size: 1.34em; color: #99a3b0">SLAM</a> <a href="/blog/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" style="font-size: 1.1em; color: #999">论文阅读</a> <a href="/blog/tags/%E7%A7%91%E7%A0%94%E6%80%BB%E7%BB%93/" style="font-size: 1.5em; color: #99a9bf">科研总结</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>Archives</span>
+      <a class="card-more-btn" href="/blog/archives/"
+            title="View More">
+            <i class="fas fa-angle-right"></i>
+          </a>
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/10/">
+            <span class="card-archive-list-date">
+              October 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/09/">
+            <span class="card-archive-list-date">
+              September 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/08/">
+            <span class="card-archive-list-date">
+              August 2025
+            </span>
+            <span class="card-archive-list-count">7</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/06/">
+            <span class="card-archive-list-date">
+              June 2025
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2025/04/">
+            <span class="card-archive-list-date">
+              April 2025
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2024/01/">
+            <span class="card-archive-list-date">
+              January 2024
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2023/12/">
+            <span class="card-archive-list-date">
+              December 2023
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/blog/archives/2023/11/">
+            <span class="card-archive-list-date">
+              November 2023
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>Website Info</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">Article Count :</div><div class="item-count">24</div></div><div class="webinfo-item"><div class="item-name">Unique Visitors :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Page Views :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">Last Update :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-10-10T06:33:23.590Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2025 By Lin Yicheng</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (true) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdn.jsdelivr.net/npm/typed.js/dist/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  },
+  processSubtitle: (content, extraContents = []) => {
+    if (true) {
+      const sub = [].slice()
+
+      if (extraContents.length > 0) {
+        sub.unshift(...extraContents)
+      }
+
+      if (typeof content === 'string') {
+        sub.unshift(content)
+      } else if (Array.isArray(content)) {
+        sub.unshift(...content)
+      }
+
+      sub.length > 0 && typedJSFn.init(sub)
+    } else {
+      document.getElementById('subtitle').textContent = typeof content === 'string' ? content :
+        (Array.isArray(content) && content.length > 0 ? content[0] : '')
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  btf.getScript('https://sdk.jinrishici.com/v2/browser/jinrishici.js')
+    .then(() => {
+      jinrishici.load(result => {
+        if (result && result.data && result.data.content) {
+          typedJSFn.processSubtitle(result.data.content)
+        } else {
+          throw new Error('Failed to parse the return value of Jinrishici API')
+        }
+      })
+    })
+    .catch(err => {
+      console.error('Failed to get the Jinrishici API:', err)
+      typedJSFn.processSubtitle(0)
+    })
+}
+typedJSFn.run(subtitleType)
+</script></div><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '$$', right: '$$', display: true},
+    {left: '$', right: '$', display: false}
+  ]});">
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code.language-math').forEach(block => {
+      const content = block.textContent;
+      const el = document.createElement('div');
+      el.classList.add('katex-display');
+      try {
+        katex.render(content, el, { throwOnError: false, displayMode: true });
+        block.parentNode.replaceWith(el);
+      } catch (e) {
+        console.error('KaTeX render error:', e);
+      }
+    });
+  });
+</script>
+<script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>新一代的导航算法研究思路 | 木独小栈</title><meta name="author" content="Lin Yicheng"><meta name="copyright" content="Lin Yicheng"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="传统的导航算法介绍  传统定位方法通常依赖于先验全局地图和外部传感器的结合来实现。  系统首先利用外部传感器（如GPS、激光雷达、摄像头或里程计）进行感知输入。 当有先验全局地图时，传感器信息与全局地图进行匹配，从而得到全局定位结果。 在缺乏全局定位或精度不足的情况下，传感器数据还会用于构建局部地图。局部地图与传感器观测不断更新，并通过局部定位模块进行实时位置估计。 局部定位和局部地图之间形成闭环">
+<meta property="og:type" content="article">
+<meta property="og:title" content="新一代的导航算法研究思路">
+<meta property="og:url" content="https://linyicheng1.github.io/blog/2025/09/10/nav/index.html">
+<meta property="og:site_name" content="木独小栈">
+<meta property="og:description" content="传统的导航算法介绍  传统定位方法通常依赖于先验全局地图和外部传感器的结合来实现。  系统首先利用外部传感器（如GPS、激光雷达、摄像头或里程计）进行感知输入。 当有先验全局地图时，传感器信息与全局地图进行匹配，从而得到全局定位结果。 在缺乏全局定位或精度不足的情况下，传感器数据还会用于构建局部地图。局部地图与传感器观测不断更新，并通过局部定位模块进行实时位置估计。 局部定位和局部地图之间形成闭环">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://linyicheng1.github.io/blog/img/RDS.jpg">
+<meta property="article:published_time" content="2025-09-10T21:14:00.000Z">
+<meta property="article:modified_time" content="2025-10-10T06:32:44.778Z">
+<meta property="article:author" content="Lin Yicheng">
+<meta property="article:tag" content="Navigation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://linyicheng1.github.io/blog/img/RDS.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "新一代的导航算法研究思路",
+  "url": "https://linyicheng1.github.io/blog/2025/09/10/nav/",
+  "image": "https://linyicheng1.github.io/blog/img/RDS.jpg",
+  "datePublished": "2025-09-10T21:14:00.000Z",
+  "dateModified": "2025-10-10T06:32:44.778Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Lin Yicheng",
+      "url": "https://linyicheng1.github.io/blog"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/blog/img/icon.png"><link rel="canonical" href="https://linyicheng1.github.io/blog/2025/09/10/nav/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '新一代的导航算法研究思路',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><style>
+  .katex-display {
+    text-align: center;
+    margin: 1.2em 0;
+  }
+  .katex {
+    font-size: 1.05em;
+    line-height: 1.4;
+  }
+  pre code.language-math {
+    background: none !important;
+    color: inherit !important;
+  }
+</style>
+<meta name="generator" content="Hexo 6.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/blog/img/icon.png" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/blog/archives/"><div class="headline">Articles</div><div class="length-num">24</div></a><a href="/blog/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/blog/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/blog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="https://linyicheng1.github.io/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/blog/img/RDS.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/blog/"><span class="site-name">木独小栈</span></a><a class="nav-page-title" href="/blog/"><span class="site-name">新一代的导航算法研究思路</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/blog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/blog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/blog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="https://linyicheng1.github.io/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">新一代的导航算法研究思路</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-09-10T21:14:00.000Z" title="Created 2025-09-10 21:14:00">2025-09-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-10-10T06:32:44.778Z" title="Updated 2025-10-10 06:32:44">2025-10-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/blog/categories/Navigation/">Navigation</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="传统的导航算法介绍">传统的导航算法介绍</h2>
+<p><img src="/blog/img/nav/1.png" alt="nav1"></p>
+<p>传统定位方法通常依赖于<strong>先验全局地图</strong>和<strong>外部传感器</strong>的结合来实现。</p>
+<ul>
+<li>系统首先利用<strong>外部传感器</strong>（如GPS、激光雷达、摄像头或里程计）进行感知输入。</li>
+<li>当有<strong>先验全局地图</strong>时，传感器信息与全局地图进行匹配，从而得到<strong>全局定位</strong>结果。</li>
+<li>在缺乏全局定位或精度不足的情况下，传感器数据还会用于构建<strong>局部地图</strong>。局部地图与传感器观测不断更新，并通过<strong>局部定位</strong>模块进行实时位置估计。</li>
+<li><strong>局部定位</strong>和<strong>局部地图</strong>之间形成闭环：局部定位依赖地图进行匹配，而地图的更新也基于局部定位的结果。</li>
+</ul>
+<p><img src="/blog/img/nav/2.png" alt="nav2"></p>
+<p>传统路径规划与控制通常分为<strong>全局路径规划</strong>和<strong>局部路径规划</strong>两个层次：</p>
+<ul>
+<li>在<strong>全局层面</strong>，系统依赖<strong>先验全局地图</strong>和<strong>全局定位</strong>，通过路径搜索算法（如A*、Dijkstra或基于图的优化方法）生成一条从起点到目标点的可行路径。</li>
+<li>在<strong>局部层面</strong>，系统结合<strong>局部定位</strong>和<strong>局部地图</strong>，实时进行<strong>局部路径规划</strong>。局部规划能够在已有全局路径的指导下，动态避障、修正轨迹，使机器人适应实际环境中的局部变化。</li>
+<li>最终，规划出的路径由<strong>本体感知</strong>（如速度、姿态、动力学状态反馈）驱动的<strong>反馈控制</strong>模块来执行，确保机器人按照预期轨迹稳定运行。</li>
+</ul>
+<p>这种架构实现了“全局目标导向 + 局部动态避障 + 底层反馈控制”的完整链路。</p>
+<h2 id="新一代的导航">新一代的导航</h2>
+<h3 id="1-多模态信息耦合的控制算法-本体通过能力">1. 多模态信息耦合的控制算法 (本体通过能力)</h3>
+<p><img src="/blog/img/nav/3.png" alt="nav3"></p>
+<p>典型的长时序本体感知被用于反馈控制例子是，</p>
+<ol>
+<li>如果四足机器人盲走到楼梯上，那么它每个腿的落点以及身体的倾角应该包含了楼梯的几何信息，可以用这些信息进行后续的行走。因此，长时序本体感知信息是非常有用的。</li>
+<li>如果轮式机器人爬一个很陡峭的坡，第一次滑下来了，那么他应该后退给起步距离，然后冲上去</li>
+</ol>
+<p>这些都是长时序本体感知用于反馈控制的例子</p>
+<p>典型的视觉信息用于前馈控制的例子有</p>
+<ol>
+<li>望梅止渴，人们看到梅子就自动的产生口水而缓解口渴，这说明视觉是可以直接作用于动作，不需要高级的大脑功能。尤其需要注意的是，这是在吃梅子之前就产生的反应，因此更多是前馈控制。</li>
+<li>机器人行走在楼梯，不连续的地面等复杂情况时</li>
+<li>轻车熟路，在某个场景中开车走过了很多遍之后，看到某个场景就会马上执行某些特定动作，而不需要大脑规划路线、感知环境，这似乎是直接从视觉到动作的关联</li>
+</ol>
+<p>直接从原始的视觉信息中的反馈控制可以有效的提高反馈控制效率，并且提高机器人在不同地形的通过性，这实际上很多时候并不需要更高级的大脑参与。</p>
+<h3 id="2-局部环境感知和本体运动估计-（外部感知能力）">2. 局部环境感知和本体运动估计 （外部感知能力）</h3>
+<p>发展过程中依托于自动驾驶的发展得到的三种技术路线为：</p>
+<p><img src="/blog/img/nav/4.png" alt="nav4"></p>
+<ol>
+<li>局部地图构建与局部定位是非耦合的；在某些极端场景下例如无纹理长走廊，更本不需要定位只需要当前帧信息身成的地图就可以导航，人类可以只根据一张图片即可确定下一步的路径。因此，BEV方案将这一耦合去除，只需要低精度的里程计就够了。</li>
+<li>一朝被蛇咬，十年怕井绳；动作/行为与感知任务之间存在关联性，每一种物体的感知重要性是不一样的。</li>
+<li>外部环境感知的目标是安全的执行移动任务，而非感知全部的外部环境；因此，端到端模型中利用路径规划表达指导感知任务，重点关注那些会导致重大安全事故的物体特征，为他们分配最多的资源。所以端到端的训练是必须的，而争议点在于是采用一个整体的模型进行黑箱端到端训练，还是拆分为具有具体功能的可导模块再训练，如下图所示。</li>
+</ol>
+<p><img src="/blog/img/nav/5.png" alt="nav5"></p>
+<ol start="4">
+<li>对于机器人来说，仿真永远仿的不够真实；因此，运行机器人执行错误并且具有自主调整能力非常重要。例如，遇到没见过的地形或障碍物，低速撞上去之后能得到反馈，下次遇到这类情况能更好的处理。</li>
+</ol>
+<h3 id="3-认知地图和方向感导航-（空间记忆和逻辑推理能力）">3. 认知地图和方向感导航 （空间记忆和逻辑推理能力）</h3>
+<p>认知地图的基本功能</p>
+<ul>
+<li>几何记忆</li>
+<li>场景理解和逻辑推理</li>
+<li>拓扑场景关联</li>
+</ul>
+<p><img src="/blog/img/nav/6.png" alt="nav6"></p>
+<ol>
+<li>动作和记忆构建的认知地图是强关联的，即
+<ol>
+<li>人类开车的时候对直行道路两边的记忆是很少的，因为你只需要往前开就好；但是在转弯或者有多个道路可以选择的区域记忆深刻，因为你要做动作的决策。</li>
+<li>你可以路过一个小店铺很多次，但是你都不记得它的具体细节，甚至不记得门牌，而当某一天你需要去店铺购买东西，执行很多动作时，大量的细节都会被记忆。</li>
+</ol>
+</li>
+<li>认知地图是非欧空间的，也就是拓扑关联的，这一点已经被很多地方论证过</li>
+<li>人类导航除了开车的导航地图有全局路径规划，大部分时间都依赖于
+<ol>
+<li>记忆构建的认知地图，给出的拓扑关联估计的方向感</li>
+<li>一些常识给出最有可能的方向，例如冰箱在厨房，以及公共区域的标志含义理解等</li>
+</ol>
+</li>
+</ol>
+<p>这一部分的研究主要分为两类方案</p>
+<h4 id="3-1-端到端导航">3.1 端到端导航</h4>
+<p><img src="/blog/img/nav/7.png" alt="nav7"></p>
+<h4 id="3-2-模块化导航">3.2 模块化导航</h4>
+<p><img src="/blog/img/nav/8.png" alt="nav7"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://linyicheng1.github.io/blog">Lin Yicheng</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://linyicheng1.github.io/blog/2025/09/10/nav/">https://linyicheng1.github.io/blog/2025/09/10/nav/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/blog/tags/Navigation/">Navigation</a></div><div class="post-share"><div class="social-share" data-image="/blog/img/RDS.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/blog/2025/10/09/Pose-Only/" title="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程"><img class="cover" src="/blog/img/story.png" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程</div></div><div class="info-2"><div class="info-item-1">数学记号定义 假设相机已标定（intrinsics已知），图像坐标已归一化。论文中涉及的符号：  XW=(xW,yW,zW)T\mathbf{X}_W = (x_W, y_W, z_W)^TXW​=(xW​,yW​,zW​)T ：世界坐标系中的3D点（上标T表示转置）。 XCi=(xCi,yCi,zCi)T\mathbf{X}^{C_i} = (x^{C_i}, y^{C_i}, z^{C_i})^TXCi​=(xCi​,yCi​,zCi​)T ：第i个相机坐标系中的3D点（上标T表示转置）。 Xi=(xi,yi,1)T\mathbf{X}_i = (x_i, y_i, 1)^TXi​=(xi​,yi​,1)T ：第i个视图中的归一化图像坐标。 RiW\mathbf{R}_{iW}RiW​ ：第i个相机的旋转矩阵（正交矩阵，满足 RiTRi=I\mathbf{R}_i^T \mathbf{R}_i = \mathbf{I}RiT​Ri​=I ，其中 I\mathbf{I}I 是单位矩阵）。 tWi∈R3\mathbf{t}_{Wi} \in \mathbb{R}^3tWi​∈R3...</div></div></div></a><a class="pagination-related" href="/blog/2025/08/25/Theseus-6/" title="Theseus-教程5"><img class="cover" src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Theseus-教程5</div></div><div class="info-2"><div class="info-item-1">运动规划 第 2 部分：可微分运动规划 在本教程中，我们将在第一部分的基础上，展示如何对使用 Theseus 实现的运动规划器进行求导。特别地，我们将演示如何在 PyTorch 中设置一个模仿学习（imitation learning）循环，为 TheseusLayer 提供初始化值，从而使其更快收敛到高质量轨迹。如果你还没有看过第一部分的运动规划教程，建议先回顾第一部分再继续本部分内容。 12345678910111213141516171819202122232425import random import matplotlib as mplimport matplotlib.pyplot as pltimport numpy as npimport torchimport torch.nn.functional as Fimport torch.utils.datafrom IPython.display import clear_outputimport theseus as thimport theseus.utils.examples as theg%load_ext...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/blog/2025/04/20/ObjectNav/" title="面向目标的导航调研"><img class="cover" src="/blog/img/23-8-SLAM.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-20</div><div class="info-item-2">面向目标的导航调研</div></div><div class="info-2"><div class="info-item-1">根据导航目标分类可以分为  Object-goal Navigation （对象目标导航） Instance-image-goal Navigation （实例图像目标导航） Text-goal Navigation (文本目标导航)  需要实现如下的能力：  语义/图片级别的目标理解（到厨房找黑色垃圾桶，到卧室找一个蓝色的灯，找到这个图片的位置） 空间推理，能够理解场景的之间的关联，例如找冰箱先去厨房，找床就要去卧室，找马桶要去洗手间  根据方法可以分为端到端的导航和模块化导航，其中区别如下图所示    端到端的导航通过视觉编码器和语言描述编码器得到当前图像和目标位置的特征，然后训练一个策略网络，根据这两个特征进行判断到底往哪个方向走，没有一个显式构建地图的过程，也没有显式的逻辑推理过程，一切都是端到端训练出来的。   模块化的导航利用了现有的定位建图方法，然后用显式的方式调用大模型的理解和推理能力  构建几何地图，用传统方法找到哪些方向可能有没有被探索的区域 构建语义地图，调用图像大模型进行目标识别/语义分割，建立语义地图（各种语义地图表达方法不同） 将语义地图转换为文本，调...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/blog/img/icon.png" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Lin Yicheng</div><div class="author-info-description"></div><div class="site-data"><a href="/blog/archives/"><div class="headline">Articles</div><div class="length-num">24</div></a><a href="/blog/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a><a href="/blog/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/linyicheng1"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/linyicheng1" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">欢迎你来我的世界</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E7%9A%84%E5%AF%BC%E8%88%AA%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">传统的导航算法介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E4%B8%80%E4%BB%A3%E7%9A%84%E5%AF%BC%E8%88%AA"><span class="toc-number">2.</span> <span class="toc-text">新一代的导航</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%A4%9A%E6%A8%A1%E6%80%81%E4%BF%A1%E6%81%AF%E8%80%A6%E5%90%88%E7%9A%84%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95-%E6%9C%AC%E4%BD%93%E9%80%9A%E8%BF%87%E8%83%BD%E5%8A%9B"><span class="toc-number">2.1.</span> <span class="toc-text">1. 多模态信息耦合的控制算法 (本体通过能力)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%B1%80%E9%83%A8%E7%8E%AF%E5%A2%83%E6%84%9F%E7%9F%A5%E5%92%8C%E6%9C%AC%E4%BD%93%E8%BF%90%E5%8A%A8%E4%BC%B0%E8%AE%A1-%EF%BC%88%E5%A4%96%E9%83%A8%E6%84%9F%E7%9F%A5%E8%83%BD%E5%8A%9B%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">2. 局部环境感知和本体运动估计 （外部感知能力）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AE%A4%E7%9F%A5%E5%9C%B0%E5%9B%BE%E5%92%8C%E6%96%B9%E5%90%91%E6%84%9F%E5%AF%BC%E8%88%AA-%EF%BC%88%E7%A9%BA%E9%97%B4%E8%AE%B0%E5%BF%86%E5%92%8C%E9%80%BB%E8%BE%91%E6%8E%A8%E7%90%86%E8%83%BD%E5%8A%9B%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">3. 认知地图和方向感导航 （空间记忆和逻辑推理能力）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E7%AB%AF%E5%88%B0%E7%AB%AF%E5%AF%BC%E8%88%AA"><span class="toc-number">2.3.1.</span> <span class="toc-text">3.1 端到端导航</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E6%A8%A1%E5%9D%97%E5%8C%96%E5%AF%BC%E8%88%AA"><span class="toc-number">2.3.2.</span> <span class="toc-text">3.2 模块化导航</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/10/09/Pose-Only/" title="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程"><img src="/blog/img/story.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程"/></a><div class="content"><a class="title" href="/blog/2025/10/09/Pose-Only/" title="A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程">A Pose-Only Solution to Visual Reconstruction and Navigation 推导过程</a><time datetime="2025-10-09T21:14:00.000Z" title="Created 2025-10-09 21:14:00">2025-10-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/09/10/nav/" title="新一代的导航算法研究思路"><img src="/blog/img/RDS.jpg" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="新一代的导航算法研究思路"/></a><div class="content"><a class="title" href="/blog/2025/09/10/nav/" title="新一代的导航算法研究思路">新一代的导航算法研究思路</a><time datetime="2025-09-10T21:14:00.000Z" title="Created 2025-09-10 21:14:00">2025-09-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-1/" title="Theseus-教程0"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程0"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-1/" title="Theseus-教程0">Theseus-教程0</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-2/" title="Theseus-教程1"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程1"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-2/" title="Theseus-教程1">Theseus-教程1</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2025/08/25/Theseus-3/" title="Theseus-教程2"><img src="https://raw.githubusercontent.com/facebookresearch/theseus/main/docs/source/img/theseus-color-horizontal.png" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Theseus-教程2"/></a><div class="content"><a class="title" href="/blog/2025/08/25/Theseus-3/" title="Theseus-教程2">Theseus-教程2</a><time datetime="2025-08-25T21:14:00.000Z" title="Created 2025-08-25 21:14:00">2025-08-25</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2020 - 2025 By Lin Yicheng</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><div class="js-pjax"></div><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {delimiters: [
+    {left: '$$', right: '$$', display: true},
+    {left: '$', right: '$', display: false}
+  ]});">
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code.language-math').forEach(block => {
+      const content = block.textContent;
+      const el = document.createElement('div');
+      el.classList.add('katex-display');
+      try {
+        katex.render(content, el, { throwOnError: false, displayMode: true });
+        block.parentNode.replaceWith(el);
+      } catch (e) {
+        console.error('KaTeX render error:', e);
+      }
+    });
+  });
+</script>
+<script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
